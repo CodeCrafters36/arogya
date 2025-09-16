@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import Signup from './LoginSignup/Signup.jsx'
 import Home from './Home.jsx'
 import Login from './LoginSignup/Login.jsx'
+import MentalHealthScreener from './Screening/MentalHealthScreener.jsx'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/screening" element={<MentalHealthScreener />} />
       </Routes>
     </div>
   )
