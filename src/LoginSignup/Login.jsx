@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 function Login({setUser}) {
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ function Login({setUser}) {
     setTimeout(() => {
       try {
         const savedUser = JSON.parse(localStorage.getItem("user"));
-             let loggedInUser = { name: username };
+             let loggedInUser = "User";
         if (
           savedUser &&
           savedUser.email === formData.email &&
