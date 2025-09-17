@@ -21,6 +21,8 @@ import Game2048 from './Games/Game2048.jsx'
 
 import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
+import Layout from './Layout/Layout.jsx'
+
 function App() {
    const [user, setUser] = useState(null);
   return (
@@ -41,7 +43,7 @@ function App() {
         <Route path="/game2048" element={<Game2048 />} />
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
         <Route path="/peersupport" element={<PeerSupport />} />
-
+        <Route path="/layout" element={<Layout />} />
       </Routes>
     </div>
   )
