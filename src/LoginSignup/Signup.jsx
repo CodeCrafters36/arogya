@@ -48,7 +48,7 @@ const handleSubmit = (e) => {
       setUser(loggedUser.name);
       // Step 4: Redirect after 1s so toast is visible
       setTimeout(() => {
-        navigate("/test");
+        navigate("/screening");
       }, 2000); // wait 1s after success
     } catch (error) {
       console.error("Error:", error);
