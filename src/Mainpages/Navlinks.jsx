@@ -10,8 +10,8 @@ function Navlinks({ isLoggedIn }) {
   ];
 
   const userLinks = [
-    { name: "Dashboard", path: "#" },
-    { name: "Profile", path: "#" },
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Profile", path: "/profile" },
     { name: "Tracker", path: "#" },
     { name: "Emergency", path: "#" },
     { name: "Analysis", path: "#" },
