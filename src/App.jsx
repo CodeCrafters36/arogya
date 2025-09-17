@@ -26,6 +26,8 @@ import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 import Layout from './Layout/Layout.jsx'
 
+import Videos from './ResourceLibrary/Videos.jsx'
+
 function App() {
    const [user, setUser] = useState(null);
    const location = useLocation(); 
@@ -52,6 +54,7 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
         <Route path="/peersupport" element={<PeerSupport />} />
         <Route path="/maindashboard" element={<MainDashboard />} />
         <Route path="/layout" element={<Layout />} />
+        <Route path="/videos" element={<Videos />} />
       </Routes>
     </div>
   )
