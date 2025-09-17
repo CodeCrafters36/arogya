@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Signup from './LoginSignup/Signup.jsx'
 import Home from './Home.jsx'
 import Login from './LoginSignup/Login.jsx'
@@ -17,7 +17,8 @@ import Planner from './Mainpages/Planner.jsx'
 import Chatbot from './Mainpages/Chatbot.jsx'
 import Bubblepop from './Games/Bubblepop.jsx'
 import Game2048 from './Games/Game2048.jsx' 
-
+import NavbarAfterLogin from './Mainpages/NavbarAfterLogin.jsx'
+import NavbarBeforeLogin from './Mainpages/NavbarBeforeLogin.jsx'
 
 import MainDashboard from './MainDashboard/MainDashboard.jsx'
 
@@ -27,9 +28,13 @@ import Layout from './Layout/Layout.jsx'
 
 function App() {
    const [user, setUser] = useState(null);
+   const location = useLocation(); 
+     const beforeLoginPages = ['/', '/login', '/signup'];
+const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
   return (
     <div>
-      <Navbar user={user}/>
+
+         {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />}
       <Chatbot/>
       <Routes>
 
