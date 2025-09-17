@@ -19,6 +19,8 @@ import Bubblepop from './Games/Bubblepop.jsx'
 import Game2048 from './Games/Game2048.jsx' 
 
 
+import MainDashboard from './MainDashboard/MainDashboard.jsx'
+
 import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 import Layout from './Layout/Layout.jsx'
@@ -43,6 +45,7 @@ function App() {
         <Route path="/game2048" element={<Game2048 />} />
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
         <Route path="/peersupport" element={<PeerSupport />} />
+        <Route path="/maindashboard" element={<MainDashboard />} />
         <Route path="/layout" element={<Layout />} />
       </Routes>
     </div>
