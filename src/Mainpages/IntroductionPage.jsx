@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
-
+import NavbarBeforeLogin from "./NavbarBeforeLogin";
 function IntroductionPage() {
   return (
+    <>
+      {/* <NavbarBeforeLogin /> */}
+    
     <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
       <section className="flex flex-col lg:flex-row items-center gap-10 justify-between px-8 lg:px-0  bg-white relative">
@@ -248,6 +251,7 @@ function IntroductionPage() {
         </p>
       </footer>
     </div>
+      </>
   );
 }
 
