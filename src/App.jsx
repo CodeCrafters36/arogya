@@ -15,6 +15,8 @@ import Dashboard from './Mainpages/Dashboard.jsx'
 import Profile from './Mainpages/Profile.jsx'
 import Planner from './Mainpages/Planner.jsx'
 import Chatbot from './Mainpages/Chatbot.jsx'
+import Bubblepop from './Games/Bubblepop.jsx'
+import Game2048 from './Games/Game2048.jsx' 
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/planner" element={<Planner />} />
         <Route path="/screening" element={<MentalHealthScreener />} />
+        <Route path="/bubblepop" element={<Bubblepop />} />
+        <Route path="/game2048" element={<Game2048 />} />
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
 
       </Routes>
