@@ -18,6 +18,7 @@ import Chatbot from './Mainpages/Chatbot.jsx'
 import Bubblepop from './Games/Bubblepop.jsx'
 import Game2048 from './Games/Game2048.jsx' 
 
+import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 function App() {
    const [user, setUser] = useState(null);
@@ -38,6 +39,7 @@ function App() {
         <Route path="/bubblepop" element={<Bubblepop />} />
         <Route path="/game2048" element={<Game2048 />} />
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
+        <Route path="/peersupport" element={<PeerSupport />} />
 
       </Routes>
     </div>
