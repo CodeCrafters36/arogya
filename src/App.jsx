@@ -21,6 +21,7 @@ import NavbarAfterLogin from './Mainpages/NavbarAfterLogin.jsx'
 import NavbarBeforeLogin from './Mainpages/NavbarBeforeLogin.jsx'
 
 import MainDashboard from './MainDashboard/MainDashboard.jsx'
+import SelfHelpBooks from './ResourceLibrary/SelfHelpBooks.jsx'
 
 import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
@@ -51,6 +52,7 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
         <Route path="/peersupport" element={<PeerSupport />} />
         <Route path="/maindashboard" element={<MainDashboard />} />
+        <Route path="/selfhelpbooks" element={<SelfHelpBooks />} />
         <Route path="/layout" element={<Layout />} />
       </Routes>
     </div>
