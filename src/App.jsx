@@ -11,7 +11,7 @@ import Navbar from './Mainpages/Navbar.jsx'
 import TestPage from './Mainpages/TestPage.jsx'
 
 import MentalHealthScreener from './Screening/MentalHealthScreener.jsx'
-
+import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 function App() {
    const [user, setUser] = useState(null);
@@ -28,6 +28,7 @@ function App() {
 
 
         <Route path="/screening" element={<MentalHealthScreener />} />
+        <Route path="/peersupport" element={<PeerSupport />} />
 
       </Routes>
     </div>
