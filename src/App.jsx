@@ -39,6 +39,8 @@ import Layout from './Layout/Layout.jsx'
 
 import Videos from './ResourceLibrary/Videos.jsx'
 
+import GoogleTranslate from './Translate/GoogleTranslate.jsx'
+
 function App() {
    const [user, setUser] = useState(null);
    const location = useLocation(); 
@@ -46,6 +48,7 @@ function App() {
 const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
   return (
     <div>
+             {/* <GoogleTranslate /> */}
 
          {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />}
       <Chatbot/>
