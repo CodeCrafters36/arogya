@@ -20,6 +20,8 @@ function NavbarAfterLogin({ user }) {
         <h1 className="text-xl font-bold text-gray-800">Arogya</h1>
       </a>
 
+      <GoogleTranslate />
+
       {/* User Links */}
       <div className="flex items-center space-x-6">
         <ul className="flex space-x-6">
