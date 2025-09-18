@@ -421,6 +421,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Play, Heart, Brain, Sparkles, Wind, Target, Star } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const Gamezone = () => {
   const [selectedGame, setSelectedGame] = useState(null);
@@ -429,17 +430,7 @@ const Gamezone = () => {
   const [floatingElements, setFloatingElements] = useState([]);
 
   const games = [
-    {
-      id: 1,
-      name: "SNAKE THERAPY",
-      type: "Focus & Growth",
-      difficulty: "Easy",
-      color: "teal",
-      icon: "🐍",
-      description: "Guide your path to growth while building focus and patience. Each move represents progress in your journey.",
-      rating: 4.8,
-      benefits: "Improves concentration and goal-setting"
-    },
+   
     {
       id: 2,
       name: "BUBBLE POP",
@@ -449,7 +440,20 @@ const Gamezone = () => {
       icon: "🫧",
       description: "Pop colorful bubbles to release tension and anxiety. Each pop brings a moment of joy and calm.",
       rating: 4.9,
-      benefits: "Reduces stress and promotes relaxation"
+      benefits: "Reduces stress and promotes relaxation",
+      url: "/games/bubble-pop"
+    },
+     {
+      id: 4,
+      name: "2048 MINDFUL",
+      type: "Mental Clarity",
+      difficulty: "Medium",
+      color: "indigo",
+      icon: "🧩",
+      description: "Combine numbers mindfully while practicing patience and strategic thinking for mental clarity.",
+      rating: 4.6,
+      benefits: "Improves problem-solving and patience",
+      url: "/games/2048-mindful"
     },
     {
       id: 3,
@@ -462,17 +466,7 @@ const Gamezone = () => {
       rating: 4.7,
       benefits: "Enhances creativity and emotional expression"
     },
-    {
-      id: 4,
-      name: "2048 MINDFUL",
-      type: "Mental Clarity",
-      difficulty: "Medium",
-      color: "indigo",
-      icon: "🧩",
-      description: "Combine numbers mindfully while practicing patience and strategic thinking for mental clarity.",
-      rating: 4.6,
-      benefits: "Improves problem-solving and patience"
-    },
+   
     {
       id: 5,
       name: "BREATHE FLOW",
@@ -483,6 +477,16 @@ const Gamezone = () => {
       description: "Follow guided breathing patterns with soothing animations. Find your inner peace and balance.",
       rating: 4.5,
       benefits: "Promotes mindfulness and reduces anxiety"
+    }, {
+      id: 1,
+      name: "SNAKE THERAPY",
+      type: "Focus & Growth",
+      difficulty: "Easy",
+      color: "teal",
+      icon: "🐍",
+      description: "Guide your path to growth while building focus and patience. Each move represents progress in your journey.",
+      rating: 4.8,
+      benefits: "Improves concentration and goal-setting"
     }
   ];
 
@@ -724,14 +728,14 @@ const Gamezone = () => {
                     )}
 
                     {/* Play Button */}
-                    <button className={`mt-6 w-full bg-gradient-to-r ${getColorClasses(game.color)} py-3 px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 group/btn shadow-md hover:shadow-lg`}
-                      style={{
-                        boxShadow: '0 0 15px rgba(100, 116, 139, 0.2)'
-                      }}
-                    >
-                      <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300" />
-                      <span className="tracking-wide">Start Game</span>
-                    </button>
+                   <Link
+  to={game.url}
+  className={`mt-6 w-full bg-gradient-to-r ${getColorClasses(game.color)} py-3 px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 group/btn shadow-md hover:shadow-lg`}
+  style={{ boxShadow: '0 0 15px rgba(100, 116, 139, 0.2)' }}
+>
+  <Play className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300" />
+  <span className="tracking-wide">Start Game</span>
+</Link>
                   </div>
 
                   {/* Subtle Scan Line */}

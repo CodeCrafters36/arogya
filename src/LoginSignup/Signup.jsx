@@ -3,8 +3,9 @@ import signup from "../assets/signupimage.jpeg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup({setUser}) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,7 +17,9 @@ function Signup() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+ 
   // Handle input change
   const handleChange = (e) => {
     setFormData({
@@ -24,28 +27,38 @@ function Signup() {
       [e.target.name]: e.target.value,
     });
   };
+   let loggedUser = { name: formData.firstName };
 
   // Handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Handle form submit
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setLoading(true);
 
+  // Step 1: Show "Please wait..."
+  toast.info("⏳ Please wait...");
+
+  setTimeout(() => {
     try {
-      const response = await fetch("http://localhost:5000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // Step 2: Save data
+      localStorage.setItem("user", JSON.stringify(formData));
 
-      const data = await response.json();
-      console.log("Server Response:", data);
+      // Step 3: Show success toast
       toast.success("✅ Signup successful!");
+      setUser(loggedUser.name);
+      // Step 4: Redirect after 1s so toast is visible
+      setTimeout(() => {
+        navigate("/screening");
+      }, 2000); // wait 1s after success
     } catch (error) {
       console.error("Error:", error);
       toast.error("❌ Something went wrong!");
+    } finally {
+      setLoading(false);
     }
-  };
+  }, 2000); // simulate 2s processing
+};
+
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -225,9 +238,14 @@ function Signup() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full mt-6 bg-green-500 text-white font-semibold py-2 rounded-lg hover:bg-green-700 transition"
+            disabled={loading}
+            className="w-full mt-6 bg-green-500 text-white font-semibold py-2 rounded-lg hover:bg-green-700 transition flex justify-center items-center"
           >
-            Create Account
+            {loading ? (
+              <span className="loader border-2 border-t-2 border-white rounded-full w-5 h-5 animate-spin"></span>
+            ) : (
+              "Create Account"
+            )}
           </button>
 
           {/* Sign in link */}
