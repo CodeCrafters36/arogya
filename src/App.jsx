@@ -1,8 +1,8 @@
 
 
 
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
+
 
 import './App.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
@@ -39,10 +39,10 @@ import Layout from './Layout/Layout.jsx'
 
 import Videos from './ResourceLibrary/Videos.jsx'
 
-import GoogleTranslate from './Translate/GoogleTranslate.jsx'
+// import GoogleTranslate from './Translate/GoogleTranslate.jsx'
 
 function App() {
-   const [user, setUser] = useState(null);
+   const [user,setUser] = useState("");
    const location = useLocation(); 
      const beforeLoginPages = ['/', '/login', '/signup'];
 const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
@@ -64,8 +64,8 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
 
 
         <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<Signup  setUser={setUser}/>} />
-        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
+        <Route path="/login" element={<Login  setUser={setUser} />} />
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />

@@ -59,9 +59,10 @@ function NavbarAfterLogin({ user }) {
   ];
 
   const dropdownLinks = [
-    { name: "Video", path: "/videos" },
+    { name: "Videos", path: "/videos" },
     { name: "Books", path: "/selfhelpbooks" },
-    { name: "Articles", path: "/article" }
+    { name: "Articles", path: "/article" },
+     { name: "Audios", path: "/audio" }
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -79,7 +80,7 @@ function NavbarAfterLogin({ user }) {
         <h1 className="text-xl font-bold text-gray-800">Arogya</h1>
       </a>
 
-      <GoogleTranslate />
+      {/* <GoogleTranslate /> */}
 
       {/* User Links */}
       <div className="flex items-center space-x-6">

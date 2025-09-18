@@ -18,7 +18,7 @@ function NavbarBeforeLogin() {
         <h1 className="text-xl font-bold text-gray-800">Arogya</h1>
       </a>
 
-       <GoogleTranslate />
+       {/* <GoogleTranslate /> */}
 
       {/* Guest Links */}
       <ul className="flex space-x-6">
