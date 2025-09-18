@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import NavbarBeforeLogin from "./NavbarBeforeLogin";
+import { Link } from "react-router-dom";
 function IntroductionPage() {
   return (
     <>
@@ -23,14 +24,19 @@ function IntroductionPage() {
             expert guidance, and a supportive community designed to help you
             thrive.
           </p>
-          <div className="flex gap-4 mt-6">
-            <button className="px-6 py-3 rounded-md bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-md hover:opacity-90">
-              Start Your Journey
-            </button>
-            <button className="px-6 py-3 rounded-md border border-gray-300 font-semibold hover:bg-gray-100">
-              Explore Resources
-            </button>
-          </div>
+        <div className="flex gap-4 mt-6">
+  <Link to="/signup">
+    <button className="px-6 py-3 rounded-md bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold shadow-md hover:opacity-90">
+      Start Your Journey
+    </button>
+  </Link>
+
+  <Link to="/signup">
+    <button className="px-6 py-3 rounded-md border border-gray-300 font-semibold hover:bg-gray-100">
+      Explore Resources
+    </button>
+  </Link>
+</div>
           <div className="flex gap-10 mt-10 text-blue-600 font-semibold">
             <div>
               <p className="text-xl">10K+</p>
