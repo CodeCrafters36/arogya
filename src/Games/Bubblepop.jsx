@@ -1,719 +1,768 @@
-// import React, { useState, useEffect, useCallback } from 'react';
-// import bgsound from '../assets/sound/bg-sound.mp3';
+import React, { useState, useEffect } from 'react';
+import { Leaf, Heart, Star, Sparkles, Music, Share2, TreePine, Target, Award, Clock } from 'lucide-react';
 
-// // Bubble component
-// const Bubble = ({ bubble, onPop, gameActive }) => {
-//   const handleClick = () => {
-//     if (gameActive) {
-//       onPop(bubble.id);
-//     }
-//   };
+const ZenGardenBuilder = () => {
+  const [score, setScore] = useState(0);
+  const [gardenItems, setGardenItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [showIntro, setShowIntro] = useState(true);
+  const [ripples, setRipples] = useState([]);
+  const [floatingElements, setFloatingElements] = useState([]);
+  const [currentChallenge, setCurrentChallenge] = useState(null);
+  const [completedChallenges, setCompletedChallenges] = useState([]);
+  const [challengeProgress, setChallengeProgress] = useState({});
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const [audioContext, setAudioContext] = useState(null);
 
-//   return (
-//     <div
-//       className="bubble"
-//       style={{
-//         left: `${bubble.x}%`,
-//         top: `${bubble.y}%`,
-//         animationDuration: `${bubble.duration}s`,
-//         '--bubble-color': bubble.color,
-//         '--bubble-glow': bubble.color + '30',
-//         animationDelay: `${bubble.delay}s`,
-//       }}
-//       onClick={handleClick}
-//     >
-//       <div className="bubble-shine"></div>
-//     </div>
-//   );
-// };
+  const positiveThoughts = [
+    "You are capable of amazing things ✨",
+    "Peace begins with your breath 🌸",
+    "Every moment is a fresh start 🌱",
+    "You deserve tranquility and joy 💖",
+    "Your mind is a beautiful garden 🌺",
+    "Breathe in calm, breathe out stress 🍃"
+  ];
 
-// const StressReliefGame = () => {
-//   const [bubbles, setBubbles] = useState([]);
-//   const [score, setScore] = useState(0);
-//   const [gameActive, setGameActive] = useState(false);
-//   const [gameStarted, setGameStarted] = useState(false);
-//   const [timeLeft, setTimeLeft] = useState(120);
-//   const [showEndMessage, setShowEndMessage] = useState(false);
-//   const [bubbleIdCounter, setBubbleIdCounter] = useState(0);
-
-//   // Audio state
-//   const [audioContext, setAudioContext] = useState(null);
-//   const [backgroundMusic, setBackgroundMusic] = useState(null);
-//   const [popSounds, setPopSounds] = useState([]);
-
-//   const colors = [
-//     '#FF0080', '#FF4080', '#FF8080', '#FFB380', '#FFE680',
-//     '#E6FF80', '#B3FF80', '#80FF80', '#80FFB3', '#80FFE6',
-//     '#80E6FF', '#80B3FF', '#8080FF', '#B380FF', '#E680FF',
-//     '#FF80E6', '#FF80B3', '#FF6B6B', '#4ECDC4', '#45B7D1',
-//     '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'
-//   ];
-
-//   const motivationalMessages = [
-//     "Take a deep breath 🌿", "You're doing amazing 💙", "Pop away the stress 🫧",
-//     "Breathe in peace 🌸", "Let worries bubble away ✨", "You're in zen mode 🧘‍♀️",
-//     "Keep flowing 🌊", "Peaceful vibes only 🕊️", "Relax and enjoy 🌈",
-//     "You're crushing it! 💪", "So calming 🌙", "Perfect rhythm 🎵"
-//   ];
-//   const [currentMessage, setCurrentMessage] = useState(motivationalMessages[0]);
-
-//   // Initialize audio
-//   const initAudio = async () => {
-//     try {
-//       const ctx = new (window.AudioContext || window.webkitAudioContext)();
-//       setAudioContext(ctx);
-
-//       const bgMusic = new Audio(bgsound);
-//       bgMusic.loop = true;
-//       bgMusic.volume = 0.3;
-//       setBackgroundMusic(bgMusic);
-
-//       const sounds = [];
-//       for (let i = 0; i < 5; i++) {
-//         sounds.push(() => playPopWithContext(ctx, 1 + i * 0.2));
-//       }
-//       setPopSounds(sounds);
-//     } catch (error) {
-//       console.log("Audio init failed:", error);
-//     }
-//   };
-
-//   const playPopWithContext = (ctx, frequency = 1) => {
-//     const oscillator = ctx.createOscillator();
-//     const gainNode = ctx.createGain();
-//     oscillator.connect(gainNode);
-//     gainNode.connect(ctx.destination);
-
-//     oscillator.frequency.setValueAtTime(800 * frequency, ctx.currentTime);
-//     oscillator.frequency.exponentialRampToValueAtTime(
-//       200 * frequency,
-//       ctx.currentTime + 0.1
-//     );
-//     gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-//     gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-
-//     oscillator.type = "sine";
-//     oscillator.start(ctx.currentTime);
-//     oscillator.stop(ctx.currentTime + 0.1);
-//   };
-
-//   const playBackgroundMusic = async () => {
-//     if (backgroundMusic) {
-//       try {
-//         await backgroundMusic.play();
-//       } catch (err) {
-//         console.log("Background music blocked:", err);
-//       }
-//     }
-//   };
-
-//   const stopBackgroundMusic = () => {
-//     if (backgroundMusic) {
-//       backgroundMusic.pause();
-//       backgroundMusic.currentTime = 0;
-//     }
-//   };
-
-//   const createBubble = useCallback(() => {
-//     setBubbleIdCounter(prev => prev + 1);
-//     return {
-//       id: bubbleIdCounter + Math.random(),
-//       x: Math.random() * 80,
-//       y: Math.random() * 75,
-//       duration: 4 + Math.random() * 3,
-//       delay: Math.random() * 0.5,
-//       color: colors[Math.floor(Math.random() * colors.length)],
-//       createdAt: Date.now()
-//     };
-//   }, [bubbleIdCounter, colors]);
-
-//   const createMultipleBubbles = useCallback((count) => {
-//     const newBubbles = [];
-//     for (let i = 0; i < count; i++) {
-//       newBubbles.push(createBubble());
-//     }
-//     return newBubbles;
-//   }, [createBubble]);
-
-//   const startGame = async () => {
-//     setGameStarted(true);
-//     setGameActive(true);
-//     setScore(0);
-//     setTimeLeft(120);
-//     setShowEndMessage(false);
-//     setBubbleIdCounter(0);
-
-//     if (!audioContext) {
-//       await initAudio();
-//     }
-//     if (audioContext?.state === "suspended") {
-//       await audioContext.resume();
-//     }
-//     playBackgroundMusic();
-
-//     const initialBubbles = createMultipleBubbles(12);
-//     setBubbles(initialBubbles);
-//   };
-
-//   const popBubble = useCallback((bubbleId) => {
-//     setBubbles(prev => prev.filter(bubble => bubble.id !== bubbleId));
-//     setScore(prev => prev + 1);
-
-//     if (popSounds.length > 0) {
-//       const randomPop = popSounds[Math.floor(Math.random() * popSounds.length)];
-//       randomPop();
-//     }
-
-//     if ((score + 1) % 3 === 0) {
-//       const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
-//       setCurrentMessage(randomMessage);
-//     }
-
-//     setTimeout(() => {
-//       if (gameActive) {
-//         const newBubbles = createMultipleBubbles(Math.random() > 0.5 ? 2 : 1);
-//         setBubbles(prev => [...prev, ...newBubbles]);
-//       }
-//     }, 200);
-//   }, [score, motivationalMessages, gameActive, createMultipleBubbles, popSounds]);
-
-//   useEffect(() => {
-//     let timer;
-//     if (gameActive && timeLeft > 0) {
-//       timer = setTimeout(() => {
-//         setTimeLeft(prev => prev - 1);
-//       }, 1000);
-//     } else if (timeLeft === 0 && gameActive) {
-//       setGameActive(false);
-//       setShowEndMessage(true);
-//       stopBackgroundMusic();
-//     }
-//     return () => clearTimeout(timer);
-//   }, [gameActive, timeLeft]);
-
-//   useEffect(() => {
-//     let bubbleSpawner;
-//     if (gameActive) {
-//       bubbleSpawner = setInterval(() => {
-//         setBubbles(prev => {
-//           const now = Date.now();
-//           const activeBubbles = prev.filter(bubble =>
-//             (now - bubble.createdAt) < (bubble.duration * 1000)
-//           );
-//           const currentCount = activeBubbles.length;
-//           let newBubblesCount = 0;
-//           if (currentCount < 8) newBubblesCount = 4;
-//           else if (currentCount < 12) newBubblesCount = 2;
-//           else if (currentCount < 15) newBubblesCount = 1;
-
-//           if (newBubblesCount > 0) {
-//             const newBubbles = createMultipleBubbles(newBubblesCount);
-//             return [...activeBubbles, ...newBubbles];
-//           }
-//           return activeBubbles;
-//         });
-//       }, 800);
-//     }
-//     return () => clearInterval(bubbleSpawner);
-//   }, [gameActive, createMultipleBubbles]);
-
-//   useEffect(() => {
-//     let extraSpawner;
-//     if (gameActive) {
-//       extraSpawner = setInterval(() => {
-//         const extraBubbles = createMultipleBubbles(Math.floor(Math.random() * 2) + 2);
-//         setBubbles(prev => [...prev, ...extraBubbles]);
-//       }, 2000);
-//     }
-//     return () => clearInterval(extraSpawner);
-//   }, [gameActive, createMultipleBubbles]);
-
-//   const formatTime = (seconds) => {
-//     const mins = Math.floor(seconds / 60);
-//     const secs = seconds % 60;
-//     return `${mins}:${secs.toString().padStart(2, '0')}`;
-//   };
-
-//   return (
-//     <div className="game-container">
-//       <style>{`
-//         .game-container {
-//           position: relative;
-//           min-height: 100vh;
-//           width: 100%;
-//           background: radial-gradient(circle at center, #0f172a, #1e293b, #0f172a);
-//           overflow: hidden;
-//           font-family: 'Poppins', sans-serif;
-//           color: white;
-//           display: flex;
-//           flex-direction: column;
-//           align-items: center;
-//           justify-content: flex-start;
-//           padding: 20px;
-//         }
-//         .game-header { text-align: center; margin-bottom: 20px; z-index: 10; }
-//         .game-title { font-size: 2.5rem; font-weight: 700; color: #a78bfa; text-shadow: 0 0 10px #c084fc, 0 0 20px #8b5cf6; margin-bottom: 10px; }
-//         .motivation-message { margin-top: 10px; font-size: 1.2rem; color: #7dd3fc; font-style: italic; }
-//         .game-stats { display: flex; justify-content: center; gap: 30px; margin-top: 10px; }
-//         .stat-item { text-align: center; }
-//         .stat-number { font-size: 1.8rem; font-weight: bold; color: #facc15; text-shadow: 0 0 10px #fde047, 0 0 20px #fbbf24; }
-//         .stat-label { font-size: 0.9rem; color: #cbd5e1; }
-//         .bubble { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: var(--bubble-color, #4ade80); box-shadow: 0 0 25px var(--bubble-glow, #4ade8030), inset -8px -8px 20px rgba(0,0,0,0.3); animation: floatUp linear forwards; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-//         .bubble-shine { position: absolute; top: 15%; left: 25%; width: 40%; height: 40%; border-radius: 50%; background: rgba(255, 255, 255, 0.5); filter: blur(6px); pointer-events: none; }
-//         @keyframes floatUp { from { transform: translateY(100vh) scale(0.8); opacity: 0.8; } to { transform: translateY(-120px) scale(1.1); opacity: 0; } }
-//         .btn { background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef); border: none; padding: 12px 28px; border-radius: 9999px; font-size: 1.1rem; font-weight: bold; color: white; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 0 20px #8b5cf6, 0 0 40px #d946ef30; }
-//         .btn:hover { transform: scale(1.05); box-shadow: 0 0 25px #8b5cf6, 0 0 50px #d946ef50; }
-//         .btn:active { transform: scale(0.95); }
-//         .welcome-screen, .end-message { text-align: center; max-width: 600px; margin: 60px auto; padding: 20px; background: rgba(30, 41, 59, 0.6); border-radius: 20px; box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
-//         .welcome-title, .end-title { font-size: 2rem; margin-bottom: 15px; color: #f9a8d4; text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6; }
-//         .welcome-description, .end-stats, .end-motivation { font-size: 1rem; color: #e2e8f0; margin-bottom: 15px; }
-//         .game-area { position: relative; flex-grow: 1; width: 100%; max-width: 900px; height: 70vh; border-radius: 20px; background: rgba(15, 23, 42, 0.5); overflow: hidden; border: 2px solid rgba(139, 92, 246, 0.3); box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.4); }
-//         .game-controls { margin-top: 20px; text-align: center; }
-//         .bubble-counter { position: absolute; top: 15px; right: 20px; font-size: 1rem; color: #fcd34d; text-shadow: 0 0 8px #facc15, 0 0 12px #fde047; }
-//       `}</style>
-
-//       {gameActive && (
-//         <div className="bubble-counter">
-//           Bubbles: {bubbles.length}
-//         </div>
-//       )}
-
-//       <div className="game-header">
-//         <h1 className="game-title">🫧 Bubble Pop Zen 🫧</h1>
-//         {gameStarted && (
-//           <>
-//             <div className="game-stats">
-//               <div className="stat-item">
-//                 <span className="stat-number">{score}</span>
-//                 <div className="stat-label">Bubbles Popped</div>
-//               </div>
-//               <div className="stat-item">
-//                 <span className="stat-number">{formatTime(timeLeft)}</span>
-//                 <div className="stat-label">Time Left</div>
-//               </div>
-//             </div>
-//             {gameActive && <div className="motivation-message">{currentMessage}</div>}
-//           </>
-//         )}
-//       </div>
-
-//       {!gameStarted ? (
-//         <div className="welcome-screen">
-//           <h2 className="welcome-title">Welcome to Bubble Pop Zen</h2>
-//           <p className="welcome-description">
-//             Get ready for a bubble-filled relaxation session! Pop the colorful bubbles floating around your screen. 
-//             The more you pop, the more appear. No pressure, just pure zen vibes! 🌈
-//           </p>
-//           <button className="btn" onClick={startGame}>
-//             Start Bubble Paradise 🫧
-//           </button>
-//         </div>
-//       ) : showEndMessage ? (
-//         <div className="end-message">
-//           <h2 className="end-title">Absolutely Amazing! 🎉</h2>
-//           <div className="end-stats">You popped <strong>{score}</strong> bubbles! 🧘‍♀️</div>
-//           <div className="end-motivation">
-//             "You've created your own peaceful bubble of calm. Well done!" 💙
-//           </div>
-//           <button className="btn" onClick={startGame}>
-//             Another Zen Session 🌸
-//           </button>
-//         </div>
-//       ) : (
-//         <>
-//           <div className="game-area">
-//             {bubbles.map(bubble => (
-//               <Bubble 
-//                 key={bubble.id} 
-//                 bubble={bubble} 
-//                 onPop={popBubble}
-//                 gameActive={gameActive}
-//               />
-//             ))}
-//           </div>
-//           <div className="game-controls">
-//             <button className="btn" onClick={() => {
-//               setGameActive(false);
-//               setShowEndMessage(true);
-//               stopBackgroundMusic();
-//             }}>
-//               End Session 🧘‍♀️
-//             </button>
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default StressReliefGame;
-
-import React, { useState, useEffect, useCallback } from "react";
-import bgsound from "../assets/sound/bg-sound.mp3";
-
-// Bubble component
-const Bubble = ({ bubble, onPop, gameActive }) => {
-  const handleClick = () => {
-    if (gameActive) {
-      onPop(bubble.id);
-    }
+  const gardenElements = {
+    cherry_tree: { icon: '🌸', name: 'Cherry Tree', color: '#ff69b4', size: 40 },
+    lotus_flower: { icon: '🪷', name: 'Lotus Flower', color: '#ffc0cb', size: 30 },
+    zen_stone: { icon: '🪨', name: 'Zen Stone', color: '#708090', size: 25 },
+    bamboo: { icon: '🎋', name: 'Bamboo', color: '#90ee90', size: 35 },
+    mountain: { icon: '⛰️', name: 'Mountain', color: '#8fbc8f', size: 45 },
+    water: { icon: '💧', name: 'Water Drop', color: '#87ceeb', size: 20 },
+    bridge: { icon: '🌉', name: 'Bridge', color: '#daa520', size: 35 }
   };
 
-  return (
-    <div
-      onClick={handleClick}
-      className="absolute flex items-center justify-center rounded-full cursor-pointer"
-      style={{
-        left: `${bubble.x}%`,
-        top: `${bubble.y}%`,
-        width: "80px",
-        height: "80px",
-        background: bubble.color,
-        boxShadow: `0 0 25px ${bubble.color}55, inset -8px -8px 20px rgba(0,0,0,0.3)`,
-        animation: `floatUp ${bubble.duration}s linear forwards`,
-        animationDelay: `${bubble.delay}s`,
-      }}
-    >
-      <div className="absolute w-2/5 h-2/5 top-[15%] left-[25%] bg-white/50 rounded-full blur-md pointer-events-none"></div>
-    </div>
-  );
-};
-
-// Floating animation (added globally)
-const bubbleAnimation = `
-@keyframes floatUp {
-  from { transform: translateY(100vh) scale(0.8); opacity: 0.8; }
-  to { transform: translateY(-120px) scale(1.1); opacity: 0; }
-}
-`;
-
-const StressReliefGame = () => {
-  const [bubbles, setBubbles] = useState([]);
-  const [score, setScore] = useState(0);
-  const [gameActive, setGameActive] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [showEndMessage, setShowEndMessage] = useState(false);
-  const [bubbleIdCounter, setBubbleIdCounter] = useState(0);
-
-  // Audio state
-  const [audioContext, setAudioContext] = useState(null);
-  const [backgroundMusic, setBackgroundMusic] = useState(null);
-  const [popSounds, setPopSounds] = useState([]);
-
-  const colors = [
-    "#FF0080", "#FF4080", "#FF8080", "#FFB380", "#FFE680",
-    "#E6FF80", "#B3FF80", "#80FF80", "#80FFB3", "#80FFE6",
-    "#80E6FF", "#80B3FF", "#8080FF", "#B380FF", "#E680FF",
-    "#FF80E6", "#FF80B3", "#FF6B6B", "#4ECDC4", "#45B7D1",
-    "#96CEB4", "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F",
+  const challenges = [
+    {
+      id: 1,
+      title: "Harmony Balance",
+      description: "Place 3 Cherry Trees in the left half of your garden",
+      type: "placement",
+      target: { element: 'cherry_tree', count: 3, zone: 'left' },
+      reward: 200,
+      icon: "🌸"
+    },
+    {
+      id: 2,
+      title: "Stone Circle",
+      description: "Create a circle with 5 Zen Stones in the center area",
+      type: "pattern",
+      target: { element: 'zen_stone', count: 5, zone: 'center' },
+      reward: 300,
+      icon: "🪨"
+    },
+    {
+      id: 3,
+      title: "Mountain Peaks",
+      description: "Place 2 Mountains in the top half of your garden",
+      type: "placement",
+      target: { element: 'mountain', count: 2, zone: 'top' },
+      reward: 250,
+      icon: "⛰️"
+    },
+    {
+      id: 4,
+      title: "Bamboo Forest",
+      description: "Create a bamboo grove with 4 bamboo plants on the right side",
+      type: "placement",
+      target: { element: 'bamboo', count: 4, zone: 'right' },
+      reward: 300,
+      icon: "🎋"
+    },
+    {
+      id: 5,
+      title: "Water Garden",
+      description: "Place 6 Water Drops in the bottom half for a peaceful pond",
+      type: "placement",
+      target: { element: 'water', count: 6, zone: 'bottom' },
+      reward: 350,
+      icon: "💧"
+    },
+    {
+      id: 6,
+      title: "Sacred Lotus",
+      description: "Place 3 Lotus Flowers anywhere to complete your zen sanctuary",
+      type: "placement",
+      target: { element: 'lotus_flower', count: 3, zone: 'anywhere' },
+      reward: 400,
+      icon: "🪷"
+    }
   ];
 
-  const motivationalMessages = [
-    "Take a deep breath 🌿", "You're doing amazing 💙", "Pop away the stress 🫧",
-    "Breathe in peace 🌸", "Let worries bubble away ✨", "You're in zen mode 🧘‍♀️",
-    "Keep flowing 🌊", "Peaceful vibes only 🕊️", "Relax and enjoy 🌈",
-    "You're crushing it! 💪", "So calming 🌙", "Perfect rhythm 🎵",
-  ];
-  const [currentMessage, setCurrentMessage] = useState(motivationalMessages[0]);
+  // Intro sequence
+  useEffect(() => {
+    if (showIntro) {
+      const timer = setTimeout(() => {
+        setShowIntro(false);
+        // Start with first challenge
+        setCurrentChallenge(challenges[0]);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showIntro]);
 
-  // --- AUDIO LOGIC (unchanged) ---
-  const initAudio = async () => {
+  // Create floating particles
+  useEffect(() => {
+    if (!showIntro) {
+      const interval = setInterval(() => {
+        setFloatingElements(prev => [
+          ...prev,
+          {
+            id: Date.now() + Math.random(),
+            x: Math.random() * 100,
+            y: 100,
+            type: Math.random() > 0.5 ? '✨' : '🍃'
+          }
+        ].slice(-8));
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, [showIntro]);
+
+  // Clean up floating elements
+  useEffect(() => {
+    const cleanup = setInterval(() => {
+      setFloatingElements(prev => prev.slice(-5));
+    }, 5000);
+
+    return () => clearInterval(cleanup);
+  }, []);
+
+  // Audio setup and bird sounds
+  useEffect(() => {
+    if (audioEnabled && !audioContext) {
+      createBirdSounds();
+    }
+  }, [audioEnabled]);
+
+  const createBirdSounds = () => {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       setAudioContext(ctx);
-
-      const bgMusic = new Audio(bgsound);
-      bgMusic.loop = true;
-      bgMusic.volume = 0.3;
-      setBackgroundMusic(bgMusic);
-
-      const sounds = [];
-      for (let i = 0; i < 5; i++) {
-        sounds.push(() => playPopWithContext(ctx, 1 + i * 0.2));
-      }
-      setPopSounds(sounds);
+      
+      // Create continuous bird chirping sounds
+      const playBirdChirp = () => {
+        if (!ctx) return;
+        
+        // Create different bird sounds
+        const frequencies = [800, 1200, 600, 1000, 1400];
+        const frequency = frequencies[Math.floor(Math.random() * frequencies.length)];
+        
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.5, ctx.currentTime + 0.1);
+        oscillator.frequency.exponentialRampToValueAtTime(frequency * 0.8, ctx.currentTime + 0.2);
+        
+        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        
+        oscillator.type = 'sine';
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.3);
+        
+        // Schedule next chirp randomly between 2-8 seconds
+        setTimeout(playBirdChirp, Math.random() * 6000 + 2000);
+      };
+      
+      // Start the bird sounds
+      setTimeout(playBirdChirp, 1000);
+      
+      // Add ambient background
+      const createAmbientSound = () => {
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.frequency.setValueAtTime(100, ctx.currentTime);
+        oscillator.type = 'sawtooth';
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(200, ctx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.02, ctx.currentTime);
+        
+        oscillator.start();
+        
+        return { oscillator, gainNode };
+      };
+      
+      createAmbientSound();
+      
     } catch (error) {
-      console.log("Audio init failed:", error);
+      console.log('Audio not supported in this browser');
     }
   };
 
-  const playPopWithContext = (ctx, frequency = 1) => {
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
+  const toggleAudio = () => {
+    setAudioEnabled(!audioEnabled);
+    if (audioContext && !audioEnabled) {
+      audioContext.resume();
+    } else if (audioContext && audioEnabled) {
+      audioContext.suspend();
+    }
+  };
+
+  const playPlacementSound = () => {
+    if (!audioContext || !audioEnabled) return;
+    
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
     oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    oscillator.frequency.setValueAtTime(800 * frequency, ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(
-      200 * frequency,
-      ctx.currentTime + 0.1
-    );
-    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-
-    oscillator.type = "sine";
-    oscillator.start(ctx.currentTime);
-    oscillator.stop(ctx.currentTime + 0.1);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+    
+    oscillator.type = 'sine';
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.2);
   };
 
-  const playBackgroundMusic = async () => {
-    if (backgroundMusic) {
-      try {
-        await backgroundMusic.play();
-      } catch (err) {
-        console.log("Background music blocked:", err);
-      }
-    }
-  };
-
-  const stopBackgroundMusic = () => {
-    if (backgroundMusic) {
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-    }
-  };
-
-  // --- BUBBLE LOGIC (unchanged) ---
-  const createBubble = useCallback(() => {
-    setBubbleIdCounter((prev) => prev + 1);
-    return {
-      id: bubbleIdCounter + Math.random(),
-      x: Math.random() * 80,
-      y: Math.random() * 75,
-      duration: 4 + Math.random() * 3,
-      delay: Math.random() * 0.5,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      createdAt: Date.now(),
-    };
-  }, [bubbleIdCounter, colors]);
-
-  const createMultipleBubbles = useCallback(
-    (count) => {
-      const newBubbles = [];
-      for (let i = 0; i < count; i++) {
-        newBubbles.push(createBubble());
-      }
-      return newBubbles;
-    },
-    [createBubble]
-  );
-
-  const startGame = async () => {
-    setGameStarted(true);
-    setGameActive(true);
-    setScore(0);
-    setTimeLeft(120);
-    setShowEndMessage(false);
-    setBubbleIdCounter(0);
-
-    if (!audioContext) {
-      await initAudio();
-    }
-    if (audioContext?.state === "suspended") {
-      await audioContext.resume();
-    }
-    playBackgroundMusic();
-
-    const initialBubbles = createMultipleBubbles(12);
-    setBubbles(initialBubbles);
-  };
-
-  const popBubble = useCallback(
-    (bubbleId) => {
-      setBubbles((prev) => prev.filter((bubble) => bubble.id !== bubbleId));
-      setScore((prev) => prev + 1);
-
-      if (popSounds.length > 0) {
-        const randomPop =
-          popSounds[Math.floor(Math.random() * popSounds.length)];
-        randomPop();
-      }
-
-      if ((score + 1) % 3 === 0) {
-        const randomMessage =
-          motivationalMessages[
-            Math.floor(Math.random() * motivationalMessages.length)
-          ];
-        setCurrentMessage(randomMessage);
-      }
-
+  const playCelebrationSound = () => {
+    if (!audioContext || !audioEnabled) return;
+    
+    // Play a series of ascending notes for celebration
+    const notes = [523, 659, 784, 1047]; // C, E, G, C (higher octave)
+    
+    notes.forEach((freq, index) => {
       setTimeout(() => {
-        if (gameActive) {
-          const newBubbles = createMultipleBubbles(
-            Math.random() > 0.5 ? 2 : 1
-          );
-          setBubbles((prev) => [...prev, ...newBubbles]);
-        }
-      }, 200);
-    },
-    [score, motivationalMessages, gameActive, createMultipleBubbles, popSounds]
-  );
-
-  useEffect(() => {
-    let timer;
-    if (gameActive && timeLeft > 0) {
-      timer = setTimeout(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0 && gameActive) {
-      setGameActive(false);
-      setShowEndMessage(true);
-      stopBackgroundMusic();
-    }
-    return () => clearTimeout(timer);
-  }, [gameActive, timeLeft]);
-
-  useEffect(() => {
-    let bubbleSpawner;
-    if (gameActive) {
-      bubbleSpawner = setInterval(() => {
-        setBubbles((prev) => {
-          const now = Date.now();
-          const activeBubbles = prev.filter(
-            (bubble) => now - bubble.createdAt < bubble.duration * 1000
-          );
-          const currentCount = activeBubbles.length;
-          let newBubblesCount = 0;
-          if (currentCount < 8) newBubblesCount = 4;
-          else if (currentCount < 12) newBubblesCount = 2;
-          else if (currentCount < 15) newBubblesCount = 1;
-
-          if (newBubblesCount > 0) {
-            const newBubbles = createMultipleBubbles(newBubblesCount);
-            return [...activeBubbles, ...newBubbles];
-          }
-          return activeBubbles;
-        });
-      }, 800);
-    }
-    return () => clearInterval(bubbleSpawner);
-  }, [gameActive, createMultipleBubbles]);
-
-  useEffect(() => {
-    let extraSpawner;
-    if (gameActive) {
-      extraSpawner = setInterval(() => {
-        const extraBubbles = createMultipleBubbles(
-          Math.floor(Math.random() * 2) + 2
-        );
-        setBubbles((prev) => [...prev, ...extraBubbles]);
-      }, 2000);
-    }
-    return () => clearInterval(extraSpawner);
-  }, [gameActive, createMultipleBubbles]);
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+        
+        oscillator.type = 'sine';
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.4);
+      }, index * 150);
+    });
   };
+  useEffect(() => {
+    if (ripples.length > 0) {
+      const timer = setTimeout(() => {
+        setRipples([]);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [ripples]);
+
+  // Check challenge completion
+  useEffect(() => {
+    if (currentChallenge) {
+      checkChallengeCompletion();
+    }
+  }, [gardenItems, currentChallenge]);
+
+  const getItemsInZone = (zone, elementType) => {
+    return gardenItems.filter(item => {
+      if (elementType && item.type !== elementType) return false;
+      
+      switch (zone) {
+        case 'left':
+          return item.x < 50;
+        case 'right':
+          return item.x > 50;
+        case 'top':
+          return item.y < 50;
+        case 'bottom':
+          return item.y > 50;
+        case 'center':
+          return item.x > 30 && item.x < 70 && item.y > 30 && item.y < 70;
+        case 'anywhere':
+          return true;
+        default:
+          return false;
+      }
+    });
+  };
+
+  const checkChallengeCompletion = () => {
+    if (!currentChallenge) return;
+
+    const { element, count, zone } = currentChallenge.target;
+    const itemsInZone = getItemsInZone(zone, element);
+    
+    setChallengeProgress({
+      current: itemsInZone.length,
+      target: count,
+      percentage: Math.min((itemsInZone.length / count) * 100, 100)
+    });
+
+    if (itemsInZone.length >= count) {
+      completeChallenge();
+    }
+  };
+
+  const completeChallenge = () => {
+    if (!currentChallenge) return;
+
+    setScore(prev => prev + currentChallenge.reward);
+    setCompletedChallenges(prev => [...prev, currentChallenge.id]);
+    setShowCelebration(true);
+    
+    // Play celebration sound
+    playCelebrationSound();
+
+    setTimeout(() => {
+      setShowCelebration(false);
+      // Move to next challenge
+      const nextChallengeIndex = challenges.findIndex(c => c.id === currentChallenge.id) + 1;
+      if (nextChallengeIndex < challenges.length) {
+        setCurrentChallenge(challenges[nextChallengeIndex]);
+        setChallengeProgress({ current: 0, target: challenges[nextChallengeIndex].target.count, percentage: 0 });
+      } else {
+        setCurrentChallenge(null);
+      }
+    }, 3000);
+  };
+
+  const createRipple = (x, y) => {
+    const ripple = {
+      id: Date.now(),
+      x: x + '%',
+      y: y + '%'
+    };
+    setRipples(prev => [...prev, ripple]);
+  };
+
+  const handleGardenClick = (e) => {
+    if (!selectedItem) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    if (x < 5 || x > 95 || y < 5 || y > 95) return;
+
+    const newItem = {
+      id: Date.now(),
+      type: selectedItem,
+      x: x,
+      y: y
+    };
+
+    setGardenItems(prev => [...prev, newItem]);
+    createRipple(x, y);
+    
+    // Play placement sound
+    playPlacementSound();
+  };
+
+  const selectItem = (itemType) => {
+    setSelectedItem(selectedItem === itemType ? null : itemType);
+  };
+
+  const clearGarden = () => {
+    setGardenItems([]);
+    setScore(0);
+    setSelectedItem(null);
+    setCurrentChallenge(challenges[0]);
+    setCompletedChallenges([]);
+    setChallengeProgress({ current: 0, target: challenges[0].target.count, percentage: 0 });
+  };
+
+  const skipChallenge = () => {
+    const nextChallengeIndex = challenges.findIndex(c => c.id === currentChallenge.id) + 1;
+    if (nextChallengeIndex < challenges.length) {
+      setCurrentChallenge(challenges[nextChallengeIndex]);
+      setChallengeProgress({ current: 0, target: challenges[nextChallengeIndex].target.count, percentage: 0 });
+    } else {
+      setCurrentChallenge(null);
+    }
+  };
+
+  // Intro Screen
+  if (showIntro) {
+    const randomThought = positiveThoughts[Math.floor(Math.random() * positiveThoughts.length)];
+    
+    return (
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 flex items-center justify-center z-50">
+        <div className="text-center text-white px-8">
+          <div className="relative">
+            {/* Animated background circles */}
+            <div className="absolute -inset-20">
+              <div className="w-32 h-32 bg-white bg-opacity-20 rounded-full absolute top-0 left-0 animate-ping" style={{ animationDelay: '0s' }} />
+              <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full absolute top-10 right-0 animate-ping" style={{ animationDelay: '0.5s' }} />
+              <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full absolute bottom-0 left-10 animate-ping" style={{ animationDelay: '1s' }} />
+            </div>
+            
+            {/* Main content */}
+            <div className="relative z-10">
+              <div className="text-6xl mb-6 animate-bounce">🌸</div>
+              <h1 className="text-4xl font-bold mb-4 animate-pulse">Welcome to Your Zen Garden</h1>
+              <div className="bg-white bg-opacity-20 rounded-2xl p-6 backdrop-blur-sm">
+                <p className="text-xl font-medium animate-pulse">{randomThought}</p>
+              </div>
+            </div>
+            
+            {/* Floating sparkles */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="text-2xl absolute top-4 left-4 animate-bounce" style={{ animationDelay: '0.2s' }}>✨</div>
+              <div className="text-2xl absolute top-8 right-8 animate-bounce" style={{ animationDelay: '0.8s' }}>🌟</div>
+              <div className="text-2xl absolute bottom-6 left-12 animate-bounce" style={{ animationDelay: '1.2s' }}>💫</div>
+              <div className="text-2xl absolute bottom-4 right-4 animate-bounce" style={{ animationDelay: '1.6s' }}>✨</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="relative flex flex-col items-center min-h-screen w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white font-poppins overflow-hidden px-4">
-      <style>{bubbleAnimation}</style>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 relative overflow-hidden">
+      {/* Floating particles */}
+      {floatingElements.map(particle => (
+        <div
+          key={particle.id}
+          className="fixed text-2xl pointer-events-none opacity-70 transition-all duration-1000"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            transform: 'translateY(-200px)',
+            animation: 'floatUp 8s linear infinite'
+          }}
+        >
+          {particle.type}
+        </div>
+      ))}
 
-      {/* Bubble counter */}
-      {gameActive && (
-        <div className="absolute top-3 right-5 text-yellow-300 drop-shadow-lg text-sm sm:text-base">
-          Bubbles: {bubbles.length}
+      {/* Celebration Modal */}
+      {showCelebration && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl p-8 max-w-md mx-4 shadow-2xl transform animate-bounce">
+            <div className="text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Challenge Complete!</h3>
+              <p className="text-lg text-gray-600 mb-4">{currentChallenge?.title}</p>
+              <div className="text-3xl text-green-600 font-bold">+{currentChallenge?.reward} points!</div>
+            </div>
+          </div>
         </div>
       )}
 
       {/* Header */}
-      <div className="text-center mt-6">
-        <h1 className="text-3xl sm:text-4xl font-bold text-purple-300 drop-shadow-lg">
-          🫧 Bubble Pop Zen 🫧
-        </h1>
-        {gameStarted && (
-          <>
-            <div className="flex justify-center gap-6 sm:gap-12 mt-4">
-              <div>
-                <div className="text-2xl font-bold text-yellow-400">
-                  {score}
-                </div>
-                <div className="text-xs text-gray-300">Bubbles Popped</div>
+      <div className="relative z-10 bg-white bg-opacity-20 backdrop-blur-md border-b border-white border-opacity-30">
+        <div className="max-w-6xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                <Leaf className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-yellow-400">
-                  {formatTime(timeLeft)}
-                </div>
-                <div className="text-xs text-gray-300">Time Left</div>
+                <h1 className="text-2xl font-bold text-gray-800">Zen Garden Builder</h1>
+                <p className="text-sm text-gray-600">Complete challenges to build your sanctuary</p>
               </div>
             </div>
-            {gameActive && (
-              <div className="mt-3 text-sky-300 italic text-sm sm:text-base">
-                {currentMessage}
+            <div className="flex items-center space-x-6">
+              <div className="text-center">
+                <p className="text-sm text-gray-600">Score</p>
+                <p className="text-xl font-bold text-purple-600">{score}</p>
               </div>
-            )}
-          </>
-        )}
+              <div className="text-center">
+                <p className="text-sm text-gray-600">Completed</p>
+                <p className="text-xl font-bold text-green-600">{completedChallenges.length}/{challenges.length}</p>
+              </div>
+              <button 
+                onClick={clearGarden}
+                className="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all duration-300 text-sm font-medium"
+              >
+                Reset
+              </button>
+              <button 
+                onClick={toggleAudio}
+                className={`p-2 rounded-full transition-all duration-300 ${
+                  audioEnabled 
+                    ? 'bg-green-100 text-green-600 hover:bg-green-200' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Music className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Screens */}
-      {!gameStarted ? (
-        <div className="mt-10 bg-slate-800/60 p-6 rounded-2xl max-w-md text-center shadow-lg">
-          <h2 className="text-2xl font-bold text-pink-300 mb-3">
-            Welcome to Bubble Pop Zen
-          </h2>
-          <p className="text-gray-200 mb-4 text-sm sm:text-base">
-            Get ready for a bubble-filled relaxation session! Pop the colorful
-            bubbles floating around your screen. The more you pop, the more
-            appear. No pressure, just pure zen vibes! 🌈
-          </p>
-          <button
-            className="px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full text-white font-semibold shadow-lg hover:scale-105 transition"
-            onClick={startGame}
-          >
-            Start Bubble Paradise 🫧
-          </button>
-        </div>
-      ) : showEndMessage ? (
-        <div className="mt-10 bg-slate-800/60 p-6 rounded-2xl max-w-md text-center shadow-lg">
-          <h2 className="text-2xl font-bold text-pink-300 mb-3">
-            Absolutely Amazing! 🎉
-          </h2>
-          <p className="text-gray-200 mb-3">
-            You popped <strong>{score}</strong> bubbles! 🧘‍♀️
-          </p>
-          <p className="text-sky-300 italic mb-4">
-            "You've created your own peaceful bubble of calm. Well done!" 💙
-          </p>
-          <button
-            className="px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full text-white font-semibold shadow-lg hover:scale-105 transition"
-            onClick={startGame}
-          >
-            Another Zen Session 🌸
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="relative w-full max-w-3xl h-[60vh] bg-slate-900/50 border border-purple-500/30 rounded-2xl mt-6 overflow-hidden shadow-inner">
-            {bubbles.map((bubble) => (
-              <Bubble
-                key={bubble.id}
-                bubble={bubble}
-                onPop={popBubble}
-                gameActive={gameActive}
-              />
-            ))}
-          </div>
-          <div className="mt-4">
-            <button
-              className="px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full text-white font-semibold shadow-lg hover:scale-105 transition"
-              onClick={() => {
-                setGameActive(false);
-                setShowEndMessage(true);
-                stopBackgroundMusic();
-              }}
+      {/* Main Game */}
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="grid lg:grid-cols-4 gap-8">
+          {/* Garden Area */}
+          <div className="lg:col-span-3">
+            <div 
+              className="relative bg-gradient-to-br from-green-100 to-emerald-50 rounded-3xl border-4 border-white border-opacity-50 shadow-2xl overflow-hidden cursor-crosshair"
+              style={{ minHeight: '400px', aspectRatio: '16/10' }}
+              onClick={handleGardenClick}
             >
-              End Session 🧘‍♀️
-            </button>
+              {/* Zone indicators when challenge is active */}
+              {currentChallenge && (
+                <div className="absolute inset-0 pointer-events-none">
+                  {currentChallenge.target.zone === 'left' && (
+                    <div className="absolute top-0 left-0 w-1/2 h-full bg-blue-200 bg-opacity-30 border-2 border-blue-300 border-dashed rounded-l-3xl" />
+                  )}
+                  {currentChallenge.target.zone === 'right' && (
+                    <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-200 bg-opacity-30 border-2 border-blue-300 border-dashed rounded-r-3xl" />
+                  )}
+                  {currentChallenge.target.zone === 'top' && (
+                    <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-200 bg-opacity-30 border-2 border-blue-300 border-dashed rounded-t-3xl" />
+                  )}
+                  {currentChallenge.target.zone === 'bottom' && (
+                    <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-200 bg-opacity-30 border-2 border-blue-300 border-dashed rounded-b-3xl" />
+                  )}
+                  {currentChallenge.target.zone === 'center' && (
+                    <div className="absolute top-1/2 left-1/2 w-2/5 h-2/5 bg-blue-200 bg-opacity-30 border-2 border-blue-300 border-dashed rounded-2xl transform -translate-x-1/2 -translate-y-1/2" />
+                  )}
+                </div>
+              )}
+
+              {/* Selection indicator */}
+              {selectedItem && (
+                <div className="absolute top-4 left-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg z-10">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-2xl">{gardenElements[selectedItem].icon}</span>
+                    <span className="text-sm font-medium">Click to place {gardenElements[selectedItem].name}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Ripple effects */}
+              {ripples.map(ripple => (
+                <div
+                  key={ripple.id}
+                  className="absolute w-20 h-20 border-4 border-purple-300 rounded-full pointer-events-none"
+                  style={{
+                    left: ripple.x,
+                    top: ripple.y,
+                    transform: 'translate(-50%, -50%)',
+                    animation: 'ripple 1s ease-out forwards'
+                  }}
+                />
+              ))}
+
+              {/* Garden Items */}
+              {gardenItems.map(item => (
+                <div
+                  key={item.id}
+                  className="absolute transform transition-all duration-500 hover:scale-110 cursor-pointer"
+                  style={{
+                    left: `${item.x}%`,
+                    top: `${item.y}%`,
+                    fontSize: `${gardenElements[item.type]?.size || 30}px`,
+                    transform: 'translate(-50%, -50%)',
+                    animation: 'bounceIn 0.8s ease-out'
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    createRipple(item.x, item.y);
+                  }}
+                >
+                  <div className="relative">
+                    <span className="block filter drop-shadow-lg">
+                      {gardenElements[item.type]?.icon}
+                    </span>
+                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-200 to-pink-200 rounded-full opacity-20 animate-pulse" />
+                  </div>
+                </div>
+              ))}
+
+              {/* Empty state */}
+              {gardenItems.length === 0 && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-gray-400">
+                    <Target className="w-16 h-16 mx-auto mb-4 animate-pulse" />
+                    <p className="text-xl font-medium">Complete challenges to build your garden</p>
+                    <p className="text-sm mt-2">Select elements and follow the challenge guide</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </>
-      )}
+
+          {/* Control Panel */}
+          <div className="space-y-6">
+            {/* Current Challenge */}
+            {currentChallenge && (
+              <div className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl p-6 border-2 border-blue-200">
+                <h3 className="text-lg font-bold text-gray-800 mb-2 flex items-center">
+                  <Target className="w-5 h-5 mr-2 text-blue-600" />
+                  Current Challenge
+                </h3>
+                <div className="bg-white bg-opacity-50 rounded-lg p-4 mb-4">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <span className="text-2xl">{currentChallenge.icon}</span>
+                    <div>
+                      <h4 className="font-bold text-gray-800">{currentChallenge.title}</h4>
+                      <p className="text-sm text-gray-600">{currentChallenge.description}</p>
+                    </div>
+                  </div>
+                  
+                  {challengeProgress && (
+                    <div className="mt-3">
+                      <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <span>Progress</span>
+                        <span>{challengeProgress.current}/{challengeProgress.target}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${challengeProgress.percentage}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="flex space-x-2">
+                  <div className="text-xs text-gray-600 flex-1">
+                    Reward: <span className="font-bold text-purple-600">+{currentChallenge.reward} points</span>
+                  </div>
+                  <button
+                    onClick={skipChallenge}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Skip
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Garden Elements */}
+            <div className="bg-white bg-opacity-30 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-50">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <TreePine className="w-5 h-5 mr-2 text-green-500" />
+                Garden Elements
+              </h3>
+              
+              <div className="grid grid-cols-1 gap-2">
+                {Object.entries(gardenElements).map(([key, element]) => {
+                  const isRequired = currentChallenge?.target.element === key;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => selectItem(key)}
+                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                        selectedItem === key
+                          ? 'bg-gradient-to-r from-purple-200 to-blue-200 border-2 border-purple-300 shadow-lg'
+                          : isRequired 
+                          ? 'bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300'
+                          : 'bg-white bg-opacity-50 border-2 border-gray-200 border-opacity-50 hover:bg-opacity-70'
+                      }`}
+                    >
+                      <span className="text-2xl">{element.icon}</span>
+                      <div className="flex-1 text-left">
+                        <p className={`text-sm font-medium ${isRequired ? 'text-orange-700' : 'text-gray-700'}`}>
+                          {element.name}
+                        </p>
+                        {isRequired && (
+                          <p className="text-xs text-orange-600">Required for challenge!</p>
+                        )}
+                      </div>
+                      {selectedItem === key && (
+                        <div className="w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Progress Summary */}
+            <div className="bg-white bg-opacity-30 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-50">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                <Award className="w-5 h-5 mr-2 text-yellow-500" />
+                Your Progress
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Total Score:</span>
+                  <span className="font-bold text-purple-600">{score}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Elements Placed:</span>
+                  <span className="font-bold text-gray-800">{gardenItems.length}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Challenges Left:</span>
+                  <span className="font-bold text-green-600">{challenges.length - completedChallenges.length}</span>
+                </div>
+              </div>
+              
+              {completedChallenges.length === challenges.length && (
+                <div className="mt-4 p-3 bg-gradient-to-r from-green-100 to-yellow-100 rounded-lg text-center">
+                  <p className="text-sm font-bold text-green-700">🎉 All Challenges Complete!</p>
+                  <p className="text-xs text-green-600 mt-1">You are a Zen Master!</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes floatUp {
+          0% {
+            transform: translateY(0px);
+            opacity: 0.7;
+          }
+          100% {
+            transform: translateY(-100vh);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes ripple {
+          0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(4);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes bounceIn {
+          0% {
+            transform: translate(-50%, -50%) scale(0);
+          }
+          50% {
+            transform: translate(-50%, -50%) scale(1.2);
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default StressReliefGame;
+export default ZenGardenBuilder;
