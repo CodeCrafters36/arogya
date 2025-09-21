@@ -32,7 +32,7 @@ import NavbarBeforeLogin from './Mainpages/NavbarBeforeLogin.jsx'
 
 import MainDashboard from './MainDashboard/MainDashboard.jsx'
 import SelfHelpBooks from './ResourceLibrary/SelfHelpBooks.jsx'
-
+import BasePage from './ResourceLibrary/BasePage.jsx'
 import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 import Layout from './Layout/Layout.jsx'
@@ -77,6 +77,7 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
         <Route path="/peersupport" element={<PeerSupport />} />
         <Route path="/maindashboard" element={<MainDashboard />} />
         <Route path="/selfhelpbooks" element={<SelfHelpBooks />} />
+        <Route path="/basepage" element={<BasePage />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/videos" element={<Videos />} />
 
