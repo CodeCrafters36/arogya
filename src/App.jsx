@@ -64,8 +64,8 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
 
 
         <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<Signup setUser={setUser} />} />
-        <Route path="/login" element={<Login  setUser={setUser} />} />
+        <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
+        <Route path="/login" element={<Login  user={user} setUser={setUser} />} />
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
