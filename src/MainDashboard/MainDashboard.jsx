@@ -2,6 +2,7 @@
 
 import { useState, useContext, createContext } from "react"
 
+
 // User Context
 const UserContext = createContext()
 
@@ -142,7 +143,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentPage, setCurrentPage }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-2">
+        <nav className="p-4 space-y-2 fixed">
           {menuItems.map((item) => (
             <button
               key={item.id}
@@ -150,7 +151,7 @@ const Sidebar = ({ isOpen, toggleSidebar, currentPage, setCurrentPage }) => {
                 setCurrentPage(item.id)
                 if (window.innerWidth < 1024) toggleSidebar()
               }}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-left ${
+              className={` w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-left ${
                 currentPage === item.id
                   ? "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 shadow-sm"
                   : "text-purple-700 hover:bg-purple-50 hover:text-purple-800"
@@ -629,7 +630,7 @@ const Dashboard = () => {
   const renderPage = () => {
     switch (currentPage) {
       case "dashboard":
-        return <DashboardPage />
+        return <Dashboardmain/>
       case "dailyPlan":
         return <DailyPlanPage />
       case "resourceLibrary":
@@ -689,3 +690,7 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+
+
+
