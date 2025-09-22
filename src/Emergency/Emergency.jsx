@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-// import EmergencyForm from './Emergency/EmergencyForm.jsx'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ambu from './ambulance.gif';
 
 const Emergency = () => {
   const [showCrisisModal, setShowCrisisModal] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [showAmbulance, setShowAmbulance] = useState(false);
+  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+ 
+
+  // Animation sequence on component mount
+  useEffect(() => {
+    const timer1 = setTimeout(() => {
+      setShowAmbulance(true);
+    }, 500);
+    
+    const timer2 = setTimeout(() => {
+      setShowSpeechBubble(true);
+    }, 1500); // Show speech bubble after ambulance appears
+    
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
 
   const CrisisModal = () => (
@@ -24,7 +42,6 @@ const Emergency = () => {
         </div>
 
         <div className="space-y-6">
-
           {/* Therapist Cards Section */}
           <div className="border-t pt-6">
             <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Available Crisis Counselors</h3>
@@ -61,10 +78,12 @@ const Emergency = () => {
                   <p className="text-gray-700"><strong>Contact:</strong> +1 (555) 123-4567</p>
                 </div>
 
-                <button className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2">
-                  <span>📞</span>
-                  <span>Contact Now</span>
-                </button>
+                <Link to="/contact-therapist">
+                  <button className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                    <span>📞</span>
+                    <span>Contact Now</span>
+                  </button>
+                </Link>
               </div>
 
               {/* Male Therapist Card */}
@@ -98,10 +117,12 @@ const Emergency = () => {
                   <p className="text-gray-700"><strong>Contact:</strong> +1 (555) 987-6543</p>
                 </div>
 
-                <button className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2">
-                  <span>📞</span>
-                  <span>Contact Now</span>
-                </button>
+                <Link to="/contact-therapist">
+                  <button className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                    <span>📞</span>
+                    <span>Contact Now</span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -110,13 +131,11 @@ const Emergency = () => {
     </div>
   );
 
-  
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-lavender-100 to-purple-200">
       {/* Header */}
       <header className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <div className="flex items-center space-x-3">
@@ -129,61 +148,46 @@ const Emergency = () => {
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                   Arogya
                 </h1>
-                <div className="text-lg font-semibold text-green-600">
-                  6267649310
-                </div>
                 <div className="text-sm text-gray-600">Mental Health Support</div>
               </div>
             </div>
 
             {/* Crisis Button */}
-            <button
-              onClick={() => setShowCrisisModal(true)}
-              className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-lg animate-pulse"
-            >
-          Immediate Support Available ⚠
-            </button>
+              <button
+                onClick={() => setShowCrisisModal(true)}
+                className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-lg animate-pulse"
+              >
+            Immediate Support Available ⚠
+              </button>
+          
           </div>
         </div>
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-8 overflow-x-auto">
-            {[
-              { id: 'home', label: "What's the problem?" },
-              { id: 'help', label: 'How we help' },
-              { id: 'resources', label: 'Useful resources' },
-              { id: 'professionals', label: 'Health professionals' },
-              { id: 'contact', label: 'Contact us' }
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveSection(item.id)}
-                className={`py-4 px-4 font-medium whitespace-nowrap border-b-2 transition-colors ${
-                  activeSection === item.id
-                    ? 'border-white text-white'
-                    : 'border-transparent text-blue-100 hover:text-white hover:border-blue-200'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
+   
 
       {/* Hero Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-5 px-4">
+        <div className="min-w-2xl mx-auto">
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* Hero Image */}
-            <div className="relative h-80 bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200">
-              {/* Sample person image placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-64 h-64 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full flex items-center justify-center border-8 border-white shadow-lg">
-                  <div className="text-8xl">👩‍⚕</div>
+            <div className="relative h-80 bg-gradient-to-br from-purple-200 via-pink-200 to-blue-200 overflow-hidden">
+              {/* Animated Ambulance */}
+              <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-1000 ${showAmbulance ? 'translate-x-0' : '-translate-x-full'}`}>
+                <img src={ambu}/>
+              </div>
+              
+              {/* Speech Bubble */}
+              <div className={`absolute top-2 left-3/5 transform -translate-x-1/2 transition-all duration-1000 ${showSpeechBubble ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+                <div className="relative bg-white rounded-2xl px-6 py-4 shadow-lg border-2 border-purple-300 max-w-xs">
+                  <p className="text-red-800 font-bold text-center text-sm">
+                    Dont Worry!! AROGYA is here to help you.
+                  </p>
+                  {/* Speech bubble tail */}
+                  <div className="absolute bottom-0 left-1/2 transform translate-y-full -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-4 border-r-4 border-t-6 border-l-transparent border-r-transparent border-t-purple-300"></div>
+                    <div className="w-0 h-0 border-l-3 border-r-3 border-t-5 border-l-transparent border-r-transparent border-t-white absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-px"></div>
+                  </div>
                 </div>
               </div>
               
@@ -193,26 +197,7 @@ const Emergency = () => {
               <div className="absolute bottom-16 left-20 w-20 h-20 bg-blue-300 rounded-full opacity-50 animate-bounce" style={{animationDelay: '1s'}}></div>
             </div>
 
-            {/* Hero Content */}
-            <div className="p-8 bg-gradient-to-r from-purple-50 to-pink-50">
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-lg">
-                <p className="text-gray-700 leading-relaxed">
-                  <strong>If there is an immediate danger to life, please dial 999 or go to your nearest</strong>{' '}
-                  <a href="#" className="text-blue-600 hover:text-blue-800 underline font-semibold">
-                    Accident and Emergency Department
-                  </a>.
-                </p>
-              </div>
-
-              <div className="text-gray-700">
-                <p className="mb-4">
-                  Details of our crisis teams and other organisations who may be able to help{' '}
-                  <a href="#" className="text-blue-600 hover:text-blue-800 underline font-semibold">
-                    can be found here
-                  </a>.
-                </p>
-              </div>
-            </div>
+          
           </div>
         </div>
       </section>
@@ -226,15 +211,14 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">🆘</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Crisis Support</h3>
               <p className="text-gray-600 mb-4">Immediate help available 24/7 for mental health emergencies and crisis situations.</p>
-              <Link to="/emergencyForm" className="text-red-500 underline">
-        <button
-                onClick={() => setShowCrisisModal(true)}
-                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-              >
-                Get Help Now
-              </button>
-      </Link>
-              
+              <Link to="/emergencyForm">
+                <button
+                  onClick={() => setShowCrisisModal(true)}
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                >
+                  Get Help Now
+                </button>
+              </Link>
             </div>
 
             {/* Counseling Services */}
@@ -242,9 +226,10 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">👨‍⚕</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Professional Help</h3>
               <p className="text-gray-600 mb-4">Connect with licensed therapists, counselors, and mental health professionals.</p>
-             <Link to="/expert"><button className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                Find a Therapist
-              </button>
+              <Link to="/expert">
+                <button className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                  Find a Therapist
+                </button>
               </Link> 
             </div>
 
@@ -253,9 +238,11 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">👥</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Community Support</h3>
               <p className="text-gray-600 mb-4">Join support groups and connect with others who understand your journey.</p>
-              <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                Join Community
-              </button>
+              <Link to="/peersupport">
+                <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                  Join Community
+                </button>
+              </Link>
             </div>
 
             {/* Self-Care Resources */}
@@ -263,9 +250,11 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">🌱</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Self-Care Tools</h3>
               <p className="text-gray-600 mb-4">Access guided meditations, breathing exercises, and wellness resources.</p>
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                Explore Tools
-              </button>
+              <Link to="/tools">
+                <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                  Explore Tools
+                </button>
+              </Link>
             </div>
 
             {/* Educational Content */}
@@ -273,9 +262,11 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">📚</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Learn & Understand</h3>
               <p className="text-gray-600 mb-4">Educational resources about mental health conditions and treatment options.</p>
-              <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                Read Articles
-              </button>
+              <Link to="/article">
+                <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                  Read Articles
+                </button>
+              </Link>
             </div>
 
             {/* Campus Resources */}
@@ -283,9 +274,11 @@ const Emergency = () => {
               <div className="text-4xl mb-4 text-center">🏫</div>
               <h3 className="text-xl font-bold text-purple-800 mb-3">Campus Services</h3>
               <p className="text-gray-600 mb-4">Find mental health services and support available on your campus.</p>
-              <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-                Campus Help
-              </button>
+              <Link to="/campus">
+                <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                  Campus Help
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -338,15 +331,21 @@ const Emergency = () => {
             <div className="bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-2xl">
               <h3 className="font-bold text-purple-800 mb-4 text-xl">Quick Access</h3>
               <div className="space-y-3">
-                <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
-                  🧘 Start Breathing Exercise
-                </button>
-                <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
-                  💬 Chat with AI Assistant
-                </button>
-                <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
-                  📋 Take Mental Health Screening
-                </button>
+                <Link to="/breathing">
+                  <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
+                    🧘 Start Breathing Exercise
+                  </button>
+                </Link>
+                <Link to="/chat">
+                  <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
+                    💬 Chat with AI Assistant
+                  </button>
+                </Link>
+                <Link to="/screening">
+                  <button className="w-full bg-white hover:bg-gray-50 text-purple-800 font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
+                    📋 Take Mental Health Screening
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -369,18 +368,18 @@ const Emergency = () => {
             <div>
               <h3 className="font-bold mb-4">Quick Links</h3>
               <div className="space-y-2 text-sm">
-                <p><a href="#" className="hover:text-purple-200">Crisis Support</a></p>
-                <p><a href="#" className="hover:text-purple-200">Find Help</a></p>
-                <p><a href="#" className="hover:text-purple-200">Resources</a></p>
+                <p><Link to="/crisis" className="hover:text-purple-200">Crisis Support</Link></p>
+                <p><Link to="/help" className="hover:text-purple-200">Find Help</Link></p>
+                <p><Link to="/resources" className="hover:text-purple-200">Resources</Link></p>
               </div>
             </div>
             
             <div>
               <h3 className="font-bold mb-4">Support Services</h3>
               <div className="space-y-2 text-sm">
-                <p>Counseling Center</p>
-                <p>Peer Support</p>
-                <p>Group Therapy</p>
+                <p><Link to="/counseling" className="hover:text-purple-200">Counseling Center</Link></p>
+                <p><Link to="/peer-support" className="hover:text-purple-200">Peer Support</Link></p>
+                <p><Link to="/group-therapy" className="hover:text-purple-200">Group Therapy</Link></p>
               </div>
             </div>
             
@@ -388,25 +387,26 @@ const Emergency = () => {
               <h3 className="font-bold mb-4">Contact Info</h3>
               <div className="space-y-2 text-sm">
                 <p>Email: codecrafter@36edu</p>
-                <p>Phone: 6267649310</p>
                 <p>Available 24/7</p>
               </div>
             </div>
           </div>
           
           <div className="border-t border-purple-700 mt-8 pt-6 text-center text-sm">
-            <p>&copy; 2024 Arogya Mental Health Support. All rights reserved. | Privacy Policy | Terms of Service</p>
+            <p>&copy; 2024 Arogya Mental Health Support. All rights reserved. | <Link to="/privacy" className="hover:text-purple-200">Privacy Policy</Link> | <Link to="/terms" className="hover:text-purple-200">Terms of Service</Link></p>
           </div>
         </div>
       </footer>
 
       {/* Floating Chat Button */}
       <div className="fixed bottom-6 right-6 z-40">
-        <button className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg transition-colors animate-pulse">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v3c0 .6.4 1 1 1 .2 0 .5-.1.7-.3L14.4 18H20c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-          </svg>
-        </button>
+        <Link to="/chat">
+          <button className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg transition-colors animate-pulse">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v3c0 .6.4 1 1 1 .2 0 .5-.1.7-.3L14.4 18H20c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </button>
+        </Link>
       </div>
 
       {/* Crisis Modal */}
