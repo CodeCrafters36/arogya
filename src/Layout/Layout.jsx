@@ -21,7 +21,7 @@ import {
   X,
   Sparkles,
   Heart,
-  Zap
+  Zap,
 } from 'lucide-react';
 
 const Layout = ({ user }) => {
@@ -62,6 +62,11 @@ const Layout = ({ user }) => {
     },
     { 
       id: 'retake-test', name: 'Retake Test', icon: RotateCcw, route: '/screening',
+      bgGradient: 'from-indigo-500 via-purple-500 to-pink-500',
+      shadowColor: 'shadow-indigo-500/25'
+    },
+    { 
+      id: 'retake-test', name: 'Admin Section', icon: Headphones, route: '/college',
       bgGradient: 'from-indigo-500 via-purple-500 to-pink-500',
       shadowColor: 'shadow-indigo-500/25'
     },
