@@ -433,38 +433,39 @@ const Gamezone = () => {
    
     {
       id: 2,
-      name: "BUBBLE POP",
+      name: "Zen Garden",
       type: "Stress Relief",
       difficulty: "Easy",
       color: "blue",
       icon: "🫧",
-      description: "Pop colorful bubbles to release tension and anxiety. Each pop brings a moment of joy and calm.",
+      description: "A peaceful Zen Garden with blooming flowers, gentle mountains, a flowing river, and a small bridge, surrounded by soothing background sounds of nature.",
       rating: 4.9,
       benefits: "Reduces stress and promotes relaxation",
       url: "/games/bubble-pop"
     },
      {
       id: 4,
-      name: "2048 MINDFUL",
+      name: "Build Block",
       type: "Mental Clarity",
       difficulty: "Medium",
       color: "indigo",
       icon: "🧩",
-      description: "Combine numbers mindfully while practicing patience and strategic thinking for mental clarity.",
+      description: "Build Block is an interactive wall where each block represents study, entertainment, or work based on their weight. If a block breaks, motivational thoughts appear to inspire and remind you not to lose hope.",
       rating: 4.6,
       benefits: "Improves problem-solving and patience",
       url: "/games/2048-mindful"
     },
     {
       id: 3,
-      name: "COLOR SPLASH",
+      name: "Drill Bunny",
       type: "Mood Boost",
       difficulty: "Medium",
       color: "emerald",
       icon: "🎨",
-      description: "Paint your world with vibrant colors. Express emotions through creative color combinations.",
+      description:"Drill Bunny is a fast-paced showstopper character that tunnels through challenges with speed and energy, breaking barriers and stealing the spotlight.",
       rating: 4.7,
-      benefits: "Enhances creativity and emotional expression"
+      benefits:"Adds excitement and engagement to the game/project.",
+      url: "/games/colorsplash"
     },
    
     {

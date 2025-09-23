@@ -24,6 +24,7 @@
     "react-toastify": "^11.0.5",
     "react-tsparticles": "^2.12.2",
     "recharts": "^3.2.1",
+    "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.1.13",
     "toastify": "^2.0.1",
     "tsparticles": "^3.9.1"

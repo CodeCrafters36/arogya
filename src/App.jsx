@@ -39,6 +39,13 @@ import Layout from './Layout/Layout.jsx'
 
 import Videos from './ResourceLibrary/Videos.jsx'
 
+import CollegeDashboard from './Admin/CollegeDashboard.jsx'
+import StudentListPage from './Admin/StudentListPage.jsx'
+import ChatPage from './Admin/ChatPage.jsx'
+
+
+import Colorsplash from './Games/Colorsplash.jsx'
+
 // import GoogleTranslate from './Translate/GoogleTranslate.jsx'
 
 function App() {
@@ -50,8 +57,8 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
     <div>
              {/* <GoogleTranslate /> */}
 
-         {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />}
-      <Chatbot/>
+         {/* {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />} */}
+      {/* <Chatbot/> */}
       <Routes>
        
        
@@ -79,7 +86,15 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
         <Route path="/selfhelpbooks" element={<SelfHelpBooks />} />
         <Route path="/basepage" element={<BasePage />} />
         <Route path="/layout" element={<Layout />} />
+
         <Route path="/videos" element={<Videos />} />
+        <Route path="/college" element={<CollegeDashboard />} />
+        <Route path="/students" element={<StudentListPage />} />
+        <Route path="/chat" element={<ChatPage/>} />
+
+        <Route path="/videos" element={<Videos />} /> 
+         <Route path="/games/colorsplash" element={<Colorsplash />} />
+
 
       </Routes>
     </div>
