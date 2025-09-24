@@ -1,10 +1,20 @@
-import React from 'react'
-import { useState } from 'react'
+
+
+
+import React, { useState } from 'react'
+
+
 import './App.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Signup from './LoginSignup/Signup.jsx'
 import Home from './Home.jsx'
 import Login from './LoginSignup/Login.jsx'
+import Emergency from './Emergency/Emergency.jsx'
+import EmergencyForm from './Emergency/EmergencyForm.jsx'
+import Expert from './Expert/expert.jsx'
+import Gamezone from './Gamezone/Gamezone.jsx'
+import Audio from './Resources/audio.jsx'
+import ArticlesComponent from './Resources/articles.jsx'
 
 import IntroductionPage from './Mainpages/IntroductionPage.jsx'
 import Navbar from './Mainpages/Navbar.jsx'
@@ -29,34 +39,47 @@ import Layout from './Layout/Layout.jsx'
 
 import Videos from './ResourceLibrary/Videos.jsx'
 
+// import GoogleTranslate from './Translate/GoogleTranslate.jsx'
+
 function App() {
-   const [user, setUser] = useState(null);
+   const [user,setUser] = useState("");
    const location = useLocation(); 
      const beforeLoginPages = ['/', '/login', '/signup'];
 const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
   return (
     <div>
+             {/* <GoogleTranslate /> */}
 
          {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />}
       <Chatbot/>
       <Routes>
+       
+       
+        <Route path="/emergency" element={<Emergency/>} />
+        <Route path="/emergencyForm" element={<EmergencyForm/>} />
+         <Route path="/expert" element={<Expert/>}/>
+         <Route path='/gamezone' element={<Gamezone/>}/>
+         <Route path='/audio' element={<Audio/>}/>
+         <Route path='/article' element={<ArticlesComponent/>}/>
+
 
         <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<Signup  setUser={setUser}/>} />
-        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
+        <Route path="/login" element={<Login  setUser={setUser} />} />
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/planner" element={<Planner />} />
         <Route path="/screening" element={<MentalHealthScreener />} />
-        <Route path="/bubblepop" element={<Bubblepop />} />
-        <Route path="/game2048" element={<Game2048 />} />
+        <Route path="/games/bubble-pop" element={<Bubblepop />} />
+        <Route path="/games/2048-mindful" element={<Game2048 />} />
         {/* <Route path="/chatbot" element={<Chatbot />} /> */}
         <Route path="/peersupport" element={<PeerSupport />} />
         <Route path="/maindashboard" element={<MainDashboard />} />
         <Route path="/selfhelpbooks" element={<SelfHelpBooks />} />
         <Route path="/layout" element={<Layout />} />
         <Route path="/videos" element={<Videos />} />
+
       </Routes>
     </div>
   )

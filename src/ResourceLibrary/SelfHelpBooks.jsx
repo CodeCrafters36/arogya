@@ -212,7 +212,7 @@ const AudioBooks = () => {
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
           <div className="flex items-center gap-3 mb-6">
             <Book className="w-8 h-8 text-amber-600" />
-            <h1 className="text-3xl font-bold text-gray-800">Mental Health Audiobooks</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Mental Health Self-help Books</h1>
           </div>
 
           {/* Search Bar */}
