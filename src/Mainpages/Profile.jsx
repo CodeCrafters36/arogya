@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NavbarAfterLogin from "../Mainpages/NavbarAfterLogin.jsx";
 import { 
   User, 
   Calendar, 
@@ -50,6 +51,8 @@ function Profile() {
   };
 
   return (
+    <>
+      <NavbarAfterLogin />
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-green-50 p-6">
       <ToastContainer />
       <div className="bg-white shadow-md rounded-2xl p-6 w-full max-w-lg">
@@ -199,6 +202,7 @@ function Profile() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

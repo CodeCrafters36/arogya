@@ -32,26 +32,33 @@ import NavbarBeforeLogin from './Mainpages/NavbarBeforeLogin.jsx'
 
 import MainDashboard from './MainDashboard/MainDashboard.jsx'
 import SelfHelpBooks from './ResourceLibrary/SelfHelpBooks.jsx'
-
+import BasePage from './ResourceLibrary/BasePage.jsx'
 import PeerSupport from './PeerSupport/PeerSupport.jsx'
 
 import Layout from './Layout/Layout.jsx'
 
 import Videos from './ResourceLibrary/Videos.jsx'
 
+import CollegeDashboard from './Admin/CollegeDashboard.jsx'
+import StudentListPage from './Admin/StudentListPage.jsx'
+import ChatPage from './Admin/ChatPage.jsx'
+
+
+import Colorsplash from './Games/Colorsplash.jsx'
+
 // import GoogleTranslate from './Translate/GoogleTranslate.jsx'
 
 function App() {
    const [user,setUser] = useState("");
-   const location = useLocation(); 
-     const beforeLoginPages = ['/', '/login', '/signup'];
-const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
+  //  const location = useLocation(); 
+  //    const beforeLoginPages = ['/', '/login', '/signup'];
+  //        const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
   return (
     <div>
              {/* <GoogleTranslate /> */}
 
-         {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />}
-      <Chatbot/>
+         {/* {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />} */}
+      {/* <Chatbot/> */}
       <Routes>
        
        
@@ -64,8 +71,8 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
 
 
         <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<Signup setUser={setUser} />} />
-        <Route path="/login" element={<Login  setUser={setUser} />} />
+        <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
+        <Route path="/login" element={<Login  user={user} setUser={setUser} />} />
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
@@ -77,8 +84,17 @@ const isBeforeLoginPage = beforeLoginPages.includes(location.pathname);
         <Route path="/peersupport" element={<PeerSupport />} />
         <Route path="/maindashboard" element={<MainDashboard />} />
         <Route path="/selfhelpbooks" element={<SelfHelpBooks />} />
+        <Route path="/basepage" element={<BasePage />} />
         <Route path="/layout" element={<Layout />} />
+
         <Route path="/videos" element={<Videos />} />
+        <Route path="/college" element={<CollegeDashboard />} />
+        <Route path="/students" element={<StudentListPage />} />
+        <Route path="/chat" element={<ChatPage/>} />
+
+        <Route path="/videos" element={<Videos />} /> 
+         <Route path="/games/colorsplash" element={<Colorsplash />} />
+
 
       </Routes>
     </div>

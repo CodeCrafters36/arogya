@@ -1,4 +1,5 @@
 import React from "react";
+import NavbarAfterLogin from "../Mainpages/NavbarAfterLogin.jsx";
 import {
   LineChart,
   Line,
@@ -75,6 +76,8 @@ function Dashboard() {
       };
 
   return (
+    <>
+      <NavbarAfterLogin />
     <div className="min-h-screen bg-gray-50 p-6">
       {/* HEADER */}
       <header className="flex justify-between items-center mb-8">
@@ -359,6 +362,7 @@ function Dashboard() {
 
       </div>
     </div>
+    </>
   );
 }
 

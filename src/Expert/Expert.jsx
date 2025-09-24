@@ -122,7 +122,7 @@ function Expert() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-violet-50 via-purple-50 to-indigo-100 py-10 px-6">
+    <div className="min-h-screen bg-gradient-to-tr from-violet-50 via-purple-50 to-indigo-100 py-8 px-6">
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold text-purple-700">

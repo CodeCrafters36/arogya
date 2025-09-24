@@ -53,16 +53,19 @@ import React, { useState } from "react";
 
 function NavbarAfterLogin({ user }) {
   const userLinks = [
-    { name: "Dashboard", path: "/dashboard" },
-
-    { name: "Profile", path: "/profile" },
-    { name: "Videos", path: "/videos" },
+     { name: "Home", path: "/layout" },
+    
+     { name: "Admin-Dashboard", path: "/college" },
    
-       { name: "Books", path: "/selfhelpbooks" },
+   
+   
+   
     { name: "Emergency", path: "/emergency" },
     { name: "To-Do List", path: "/planner" },
+    { name: "User-Dashboard", path: "/dashboard" },
+     { name: "Profile", path: "/profile" },
 
-    { name: "Layout", path: "/layout" }
+   
   ];
 
   const dropdownLinks = [
@@ -75,7 +78,7 @@ function NavbarAfterLogin({ user }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="w-full bg-white shadow-md px-6 py-4 mb-5 flex justify-between items-center ">
+    <nav className="w-full bg-white shadow-md px-6 py-4 mb-5 flex justify-between items-center z-100 ">
       {/* Logo */}
       <a
         href="/layout"
@@ -90,7 +93,7 @@ function NavbarAfterLogin({ user }) {
       {/* <GoogleTranslate /> */}
 
       {/* User Links */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-6 z-100">
         <ul className="flex space-x-6 items-center">
           {userLinks.map((link, index) => (
             <li key={index}>

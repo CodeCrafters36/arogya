@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import NavbarAfterLogin from "../Mainpages/NavbarAfterLogin.jsx";
 function Planner() {
   const [dailyTasks, setDailyTasks] = useState([]);
   const [completedCount, setCompletedCount] = useState(0);
@@ -47,6 +47,9 @@ function Planner() {
   };
 
   return (
+    <>
+      <NavbarAfterLogin />
+    
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white p-6">
       {/* Toastify container */}
       <ToastContainer position="top-center" autoClose={2000} />
@@ -180,6 +183,7 @@ function Planner() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

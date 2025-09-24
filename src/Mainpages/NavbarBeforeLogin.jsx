@@ -9,7 +9,7 @@ function NavbarBeforeLogin() {
   ];
 
   return (
-    <nav className="w-full bg-white shadow-md px-6 py-4 mb-5 flex justify-between items-center">
+    <nav className="w-full bg-white shadow-md px-6 py-4 mb-5 flex justify-between items-center ">
       {/* Logo */}
       <a href="/layout" className="flex items-center space-x-2 hover:opacity-80 transition">
         <div className="w-8 h-8 bg-purple-600 text-white flex items-center justify-center rounded-full font-bold">

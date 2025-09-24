@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import NavbarBeforeLogin from "./NavbarBeforeLogin.jsx";  
+import NavbarAfterLogin from "./NavbarAfterLogin.jsx";
 // Custom Cursor Component
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -478,8 +479,15 @@ function IntroductionPage() {
   ];
 
   return (
-    <div className="w-full overflow-x-hidden bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50" style={{ cursor: 'none' }}>
+    <>
+    
+ <NavbarAfterLogin/>
+    
+   
+    
+    <div className="  w-full overflow-x-hidden bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50" style={{ cursor: 'none' }}>
       {/* Custom Cursor */}
+      
       <CustomCursor />
       
       {/* Flying Elements */}
@@ -790,14 +798,14 @@ function IntroductionPage() {
           
           <div className="flex flex-col sm:flex-row justify-center gap-8">
             <button 
-              onClick={() => window.location.href = '#signup'}
+              onClick={() => window.location.href = '/layout'}
               className="px-12 py-5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-2xl shadow-2xl hover:shadow-pink-500/50 transition-all duration-300 transform hover:scale-110 border-2 border-white/30"
             >
               🌺 Begin Your Magical Journey
             </button>
-            <button className="px-12 py-5 rounded-full border-3 border-white/50 font-bold text-2xl hover:bg-white hover:text-purple-600 transition-all duration-300 transform hover:scale-110 backdrop-blur-sm">
+            {/* <button className="px-12 py-5 rounded-full border-3 border-white/50 font-bold text-2xl hover:bg-white hover:text-purple-600 transition-all duration-300 transform hover:scale-110 backdrop-blur-sm">
               🎬 Watch Our Garden Tour
-            </button>
+            </button> */}
           </div>
           
           <div className="mt-16 flex justify-center items-center gap-12 text-lg text-purple-200">
@@ -938,6 +946,7 @@ function IntroductionPage() {
         }
       `}</style>
     </div>
+    </>
   );
 }
 

@@ -1,5 +1,6 @@
 // src/pages/AudioBooks.jsx
 import React, { useState, useEffect } from 'react';
+import NavbarAfterLogin from '../Mainpages/NavbarAfterLogin.jsx';
 import {
   Search,
   Book,
@@ -206,6 +207,9 @@ const AudioBooks = () => {
   };
 
   return (
+    <>
+      <NavbarAfterLogin />
+ 
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -444,7 +448,9 @@ const AudioBooks = () => {
         </div>
       </div>
     </div>
+       </>
   );
 };
 
 export default AudioBooks;
+
