@@ -17,7 +17,7 @@ import Audio from './Resources/audio.jsx'
 import ArticlesComponent from './Resources/articles.jsx'
 
 import IntroductionPage from './Mainpages/IntroductionPage.jsx'
-import Navbar from './Mainpages/Navbar.jsx'
+
 import TestPage from './Mainpages/TestPage.jsx'
 
 import MentalHealthScreener from './Screening/MentalHealthScreener.jsx'
