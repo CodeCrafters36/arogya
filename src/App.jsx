@@ -13,8 +13,8 @@ import Emergency from './Emergency/Emergency.jsx'
 import EmergencyForm from './Emergency/EmergencyForm.jsx'
 import Expert from './Expert/Expert.jsx'
 import Gamezone from './Gamezone/Gamezone.jsx'
-import Audio from './Resources/audio.jsx'
-import ArticlesComponent from './Resources/articles.jsx'
+import Audio from './Resources/Audio.jsx'
+import ArticlesComponent from './Resources/Articles.jsx'
 
 import IntroductionPage from './Mainpages/IntroductionPage.jsx'
 
