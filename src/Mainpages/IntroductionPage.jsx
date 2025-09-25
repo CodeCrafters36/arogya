@@ -178,7 +178,7 @@ const FlowerBreathingCircle = ({ isActive, sessionActive, currentTime, totalTime
   
   return (
     <div className="relative">
-    <Chatbot/>
+    {/* <Chatbot/> */}
       {/* Outer flower petals */}
       <div className={`absolute inset-0 transition-all duration-2000 ${isActive ? 'animate-spin' : ''}`}>
         {Array.from({ length: 1 }).map((_, i) => (
