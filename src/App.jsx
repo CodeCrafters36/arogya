@@ -58,7 +58,7 @@ function App() {
              {/* <GoogleTranslate /> */}
 
          {/* {isBeforeLoginPage ? <NavbarBeforeLogin /> : <NavbarAfterLogin />} */}
-      {/* <Chatbot/> */}
+      <Chatbot/>
       <Routes>
        
        

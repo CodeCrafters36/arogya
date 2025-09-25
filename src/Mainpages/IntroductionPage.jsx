@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavbarBeforeLogin from "./NavbarBeforeLogin.jsx";  
 import NavbarAfterLogin from "./NavbarAfterLogin.jsx";
+import Chatbot from "./Chatbot.jsx";
 // Custom Cursor Component
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -177,6 +178,7 @@ const FlowerBreathingCircle = ({ isActive, sessionActive, currentTime, totalTime
   
   return (
     <div className="relative">
+    <Chatbot/>
       {/* Outer flower petals */}
       <div className={`absolute inset-0 transition-all duration-2000 ${isActive ? 'animate-spin' : ''}`}>
         {Array.from({ length: 1 }).map((_, i) => (

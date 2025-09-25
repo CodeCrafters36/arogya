@@ -252,7 +252,7 @@ function Chatbot() {
       {!isOpen && (
         <button
           onClick={openChat}
-          className="fixed bottom-6 right-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white p-4 rounded-full shadow-xl transition z-100"
+          className="fixed bottom-6 right-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white p-4 rounded-full shadow-xl transition z-200"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6" />
         </button>
