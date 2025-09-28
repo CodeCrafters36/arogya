@@ -429,22 +429,22 @@ function IntroductionPage() {
   const features = [
     {
       title: "🌱 AI Bloom Assessment",
-      desc: "Discover your mental garden's growth patterns with AI that understands your unique journey toward wellness and inner peace.",
+      desc: "Discover your mental Arogya's growth patterns with AI that understands your unique journey toward wellness and inner peace.",
       icon: "🌺",
     },
     {
       title: "🦋 Mindful Metamorphosis",
-      desc: "Transform daily through guided meditations, breathing gardens, and mindfulness practices that help you bloom into your best self.",
+      desc: "Transform daily through guided meditations, breathing , and mindfulness practices that help you bloom into your best self.",
       icon: "🦋",
     },
     {
       title: "📚 Wisdom Grove Library",
-      desc: "Access a forest of knowledge with therapeutic techniques and healing resources cultivated by expert mental health gardeners.",
+      desc: "Access a forest of knowledge with therapeutic techniques and healing resources cultivated by expert mental health counsellor.",
       icon: "🌳",
     },
     {
       title: "🌸 Blooming Community",
-      desc: "Connect with fellow flowers in our nurturing garden - a safe space where every soul can grow, heal, and flourish together.",
+      desc: "Connect with fellow flowers in our nurturing counsellor - a safe space where every soul can grow, heal, and flourish together.",
       icon: "🌻",
     },
   ];
@@ -454,7 +454,7 @@ function IntroductionPage() {
       stat: "87",
       suffix: "%",
       title: "🌸 Mental Blooming Success",
-      desc: "Watch your mind garden flourish with measurable improvements in mood, anxiety relief, and overall life satisfaction.",
+      desc: "Watch your mind arogya flourish with measurable improvements in mood, anxiety relief, and overall life satisfaction.",
       icon: "🌺",
     },
     {
@@ -467,15 +467,15 @@ function IntroductionPage() {
     {
       stat: "50",
       suffix: "+",
-      title: "🌿 Expert Gardeners",
+      title: "🌿 Expert Counsellor",
       desc: "Learn from our team of licensed therapists, psychologists, and wellness experts who cultivate our healing content.",
       icon: "🌿",
     },
     {
       stat: "10",
       suffix: "K+",
-      title: "🌻 Thriving Garden",
-      desc: "Join thousands of beautiful souls who found their place in our supportive wellness community garden.",
+      title: "🌻 Thriving community",
+      desc: "Join thousands of beautiful souls who found their place in our supportive wellness community arogya.",
       icon: "🌻",
     },
   ];
@@ -529,7 +529,7 @@ function IntroductionPage() {
         <div className="max-w-2xl relative z-10 transform transition-all duration-1000 translate-y-0">
           <div className="animate-fadeInUp">
             <span className="inline-block px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-lg font-medium mb-8 animate-bounce">
-              🌸 Transform Your Soul Garden 🦋
+              🌸 Transform Your Soul 🦋
             </span>
             <h1 className="text-6xl lg:text-8xl font-bold leading-tight mb-8">
               Bloom into{" "}
@@ -538,7 +538,7 @@ function IntroductionPage() {
               </span>
             </h1>
             <p className="text-2xl text-purple-100 leading-relaxed mb-12">
-              Embark on a magical journey through our enchanted wellness garden, where every breath nurtures your soul and every moment helps you blossom 🌺
+              Embark on a magical journey through our enchanted wellness Arogya, where every breath nurtures your soul and every moment helps you blossom 🌺
             </p>
           </div>
 
@@ -682,11 +682,11 @@ function IntroductionPage() {
         
         <div className="relative z-10">
           <span className="inline-block px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-lg font-bold mb-8">
-            🌺 Garden of Success 🌺
+            🌺 Arogya Success 🌺
           </span>
           <h2 className="text-6xl font-bold mb-8">Witness the Magic of Growth</h2>
           <p className="text-2xl text-purple-100 max-w-4xl mx-auto mb-20 leading-relaxed">
-            Join our blooming community where thousands of beautiful souls have already transformed their lives through our enchanted wellness garden 🌸
+            Join our blooming community where thousands of beautiful souls have already transformed their lives through our enchanted wellness Arogya 🌸
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -736,7 +736,7 @@ function IntroductionPage() {
         
         <div className="max-w-7xl mx-auto relative z-10">
           <span className="inline-block px-6 py-3 bg-pink-200 text-pink-700 rounded-full text-lg font-bold mb-8">
-            🌻 Magical Features Garden 🌻
+            🌻 Magical Features  🌻
           </span>
           <h2 className="text-6xl font-bold mb-8">
             Why Choose Our{" "}
@@ -745,7 +745,7 @@ function IntroductionPage() {
             </span>
           </h2>
           <p className="text-gray-600 text-2xl max-w-4xl mx-auto mb-20 leading-relaxed">
-            Step into our magical wellness sanctuary where cutting-edge technology meets nature's healing wisdom to create your perfect garden of growth 🦋
+            Step into our magical wellness sanctuary where cutting-edge technology meets nature's healing wisdom to create your perfect arogya of growth 🦋
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -791,7 +791,7 @@ function IntroductionPage() {
           <h2 className="text-6xl lg:text-7xl font-bold mb-8">
             Ready to Bloom in Your{" "}
             <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
-              Magical Garden? 🌸
+              Magical Arogya? 🌸
             </span>
           </h2>
           <p className="text-2xl text-purple-100 max-w-4xl mx-auto mb-16 leading-relaxed">
@@ -850,10 +850,10 @@ function IntroductionPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-16 text-gray-700 mb-16">
             <div className="md:col-span-2">
               <h3 className="font-bold text-4xl bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent mb-6">
-                🌸 Arogya Garden
+                🌸 Arogya 
               </h3>
               <p className="text-gray-600 text-xl leading-relaxed mb-8">
-                Nurturing beautiful souls and healing precious hearts through our magical garden of compassion, wonder, and evidence-based wellness practices 🦋
+                Nurturing beautiful souls and healing precious hearts through our magical aroyga of compassion, wonder, and evidence-based wellness practices 🦋
               </p>
               <div className="flex gap-6">
                 {['📧', '💬', '📱', '🌐'].map((icon, i) => (
@@ -869,12 +869,12 @@ function IntroductionPage() {
             
             {[
               {
-                title: "🌺 Garden Resources",
-                links: ["Soul Assessment 🌱", "Daily Practices 🦋", "Wisdom Library 📚", "Community Garden 🌻"]
+                title: "🌺 Arogya Resources",
+                links: ["Soul Assessment 🌱", "Daily Practices 🦋", "Wisdom Library 📚", "Community  🌻"]
               },
               {
-                title: "🌸 Garden Support",
-                links: ["Help Center 💫", "Contact Gardeners 🧚‍♀️", "Privacy Sanctuary 🔮", "Garden Rules 📜"]}
+                title: "🌸 Arogya Support",
+                links: ["Help Center 💫", "Contact  🧚‍♀️", "Privacy Sanctuary 🔮", "Arogya Rules 📜"]}
             ].map((section, i) => (
               <div key={i}>
                 <h4 className="font-bold text-2xl mb-6 text-gray-800">{section.title}</h4>
@@ -893,7 +893,7 @@ function IntroductionPage() {
           
           <div className="border-t-2 border-pink-200 pt-8 text-center">
             <p className="text-gray-500 text-xl">
-              © 2025 Arogya Enchanted Garden. All magic reserved. Crafted with 💖 for blooming souls everywhere 🌸
+              © 2025 Arogya . All magic reserved. Crafted with 💖 for blooming souls everywhere 🌸
             </p>
           </div>
         </div>
